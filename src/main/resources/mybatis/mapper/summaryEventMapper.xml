@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.oidd.pt.mapper.SummaryEventMapper">
+
+
+    <select id="countSummaryEventByDate" resultType="com.ai.oidd.pt.vo.SummaryEvents">
+        SELECT SUM(stCounts) AS stCounts,SUM(svCounts) svCounts FROM  t_event_summary  es
+        WHERE 1=1
+        <if test="null != start and ''!= start and 0 != start">
+            and es.date <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+            and es.date <![CDATA[ <= ]]> #{end}
+        </if>
+    </select>
+
+
+</mapper>

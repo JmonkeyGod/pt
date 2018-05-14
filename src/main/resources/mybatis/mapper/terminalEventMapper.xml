@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.oidd.pt.mapper.TerminalEventMapper">
+
+    <resultMap id="totalTerEventsMaps" type="com.ai.oidd.pt.vo.TotalTerEvents">
+        <id column="date" jdbcType="VARCHAR" property="date"/>
+        <result column="total" jdbcType="INTEGER" property="total"/>
+    </resultMap>
+
+    <resultMap id="dailyTerEventsMaps" type="com.ai.oidd.pt.vo.DailyTerEvents">
+        <id column="date" jdbcType="VARCHAR" property="date"/>
+        <result column="sm" jdbcType="VARCHAR" property="sm"/>
+        <result column="cm" jdbcType="VARCHAR" property="cm"/>
+    </resultMap>
+
+
+
+    <!-- 累计高危终端数 -->
+    <select id="countTerminalEventByDate" resultMap="totalTerEventsMaps">
+        SELECT CAST(DATE_FORMAT(et.`updateTime`,'%Y%m%d') AS SIGNED INTEGER) AS date, SUM(cmap+mm+sm+cm ) AS total FROM t_event_terminal et
+        WHERE 1=1
+        <if test="null != start and ''!= start and 0 != start">
+        AND CAST(DATE_FORMAT(et.`updateTime`,'%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+        AND CAST(DATE_FORMAT(et.`updateTime`,'%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
+        </if>
+        GROUP BY CAST(DATE_FORMAT(et.`updateTime`,'%Y%m%d') AS SIGNED INTEGER);
+    </select>
+
+
+    <!-- 高频呼出，短信，总量 -->
+    <select id="countTerminalEventDaily" resultMap="dailyTerEventsMaps">
+        SELECT DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS DATE,SUM(sm) AS sm,SUM(cm) AS cm
+        FROM t_event_terminal et
+        WHERE 1 = 1
+        <if test="null != start and ''!= start and 0 != start">
+            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
+        </if>
+        GROUP BY DATE_FORMAT(et.`updateTime`, '%Y%m%d');
+    </select>
+
+
+
+
+</mapper>

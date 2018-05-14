@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.oidd.pt.mapper.RegionalEventMapper">
+
+
+    <resultMap id="RegionEventMaps" type="com.ai.oidd.pt.vo.RegionEvents">
+        <id column="regionId" jdbcType="VARCHAR" property="regionId"/>
+        <result column="regionName" jdbcType="VARCHAR" property="regionName"/>
+        <result column="counts" jdbcType="INTEGER" property="counts"/>
+    </resultMap>
+
+    <select id="countRegionalEventByDate" resultMap="RegionEventMaps">
+        SELECT t.regionId,ri.regionName,SUM(eventCounts) as counts FROM t_event_regional t, t_region_info ri
+        WHERE 1=1
+            and  t.regionId = ri.regionId
+        <if test="null != start and ''!= start and 0 != start">
+            and t.date <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+            and t.date <![CDATA[ <= ]]> #{end}
+        </if>
+        GROUP BY regionId
+    </select>
+
+
+</mapper>

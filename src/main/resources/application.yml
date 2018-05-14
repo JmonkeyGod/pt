@@ -1,0 +1,54 @@
+spring:
+    application:
+        name: pt-base
+    jackson:
+        date-format: yyyy-MM-dd HH:mm:ss
+        time-zone: GMT+8
+        default-property-inclusion: non_null
+    datasource:
+          name: test
+          #url: jdbc:oracle:thin:@10.15.42.29:1521:oidd
+          url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/pt?useUnicode=true&characterEncoding=UTF8
+          username: root
+          password: root
+          # 使用druid数据源
+          type: com.alibaba.druid.pool.DruidDataSource
+          #driver-class-name: oracle.jdbc.driver.OracleDriver
+          druid:
+            max-active: 20
+            initial-size: 2
+            max-wait: 60000
+            min-idle: 2
+            time-between-eviction-runs-millis: 60000
+            min-evictable-idle-time-millis: 300000
+            validation-query: select 1
+            testWhileIdle: true
+            testOnBorrow: false
+            testOnReturn: false
+            pool-prepared-statements: true
+            max-pool-prepared-statement-per-connection-size: 5
+            maxOpenPreparedStatements: 20
+            async-close-connection-enable: true
+
+server:
+    port: 9527
+
+
+
+logging:
+    level:
+      root: INFO
+      com.ai.oidd.pt.mapper: debug
+
+mybatis:
+    config-locations: classpath:mybatis/mybatis-config.xml
+    mapper-locations: classpath:mybatis/mapper/*.xml
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+
+
