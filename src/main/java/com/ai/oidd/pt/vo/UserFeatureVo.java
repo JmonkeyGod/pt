@@ -11,5 +11,9 @@ import lombok.Data;
  */
 @Data
 public class UserFeatureVo extends UserFeature {
+
+    /**
+     * 终端类型
+     */
     private String terminalType;
 }

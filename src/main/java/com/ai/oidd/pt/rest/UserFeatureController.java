@@ -41,13 +41,13 @@ public class UserFeatureController extends BaseController<IUserFeatureService, U
         UserFeature userFeature =  base.selectById(mdn);
         if(null != userFeature){
             UserFeatureVo featureVo = new UserFeatureVo();
-            BeanUtils.copyProperties(featureVo, userFeature);
-
+            BeanUtils.copyProperties(userFeature,featureVo);
             UserTerminal userTerminal = userTerminalBiz.queryUserTerminal(mdn);
             String terminalType = userTerminal.getTerminalType();
             if (null != terminalType) {
                 featureVo.setTerminalType(terminalType);
             }
+
             entityObjectRestResponse.data(featureVo);
         }else{
             entityObjectRestResponse.data(userFeature);
