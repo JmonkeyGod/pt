@@ -7,13 +7,12 @@ spring:
         default-property-inclusion: non_null
     datasource:
           name: test
-          #url: jdbc:oracle:thin:@10.15.42.29:1521:oidd
+
           url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/pt?useUnicode=true&characterEncoding=UTF8
           username: root
           password: root
           # 使用druid数据源
           type: com.alibaba.druid.pool.DruidDataSource
-          #driver-class-name: oracle.jdbc.driver.OracleDriver
           druid:
             max-active: 20
             initial-size: 2
