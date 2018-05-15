@@ -97,44 +97,50 @@ public class MdnMonitorBiz extends BaseBiz<MdnMonitorMapper, MdnMonitor> {
     public TableResultResponse<MdnMonitor> queryByExampleAndPage(MdnMonitorVo vo) {
         Example example = new Example(MdnMonitor.class);
         Example.Criteria criteria = example.createCriteria();
-        String mdn = vo.getMdn();
-        if (StringUtils.isNotEmpty(mdn)) {
-            criteria.andEqualTo("mdn", mdn);
+
+        int page = 1;
+        int limit = 10;
+        if (null != vo) {
+            String mdn = vo.getMdn();
+            if (StringUtils.isNotEmpty(mdn)) {
+                criteria.andEqualTo("mdn", mdn);
+            }
+
+            String imei = vo.getImei();
+            if (StringUtils.isNotEmpty(imei)) {
+                criteria.andEqualTo("imei", imei);
+            }
+
+            String terminalType = vo.getTerminalType();
+            if (StringUtils.isNotEmpty(terminalType)) {
+                criteria.andEqualTo("terminalType", terminalType);
+            }
+
+            String sourceType = vo.getSourceType();
+            if (StringUtils.isNotEmpty(sourceType)) {
+                criteria.andEqualTo("sourceType", sourceType);
+            }
+
+            String sourceArea = vo.getSourceArea();
+            if (StringUtils.isNotEmpty(sourceArea)) {
+                criteria.andEqualTo("sourceArea", sourceArea);
+            }
+
+            String baseId = vo.getBaseId();
+            if (StringUtils.isNotEmpty(baseId)) {
+                criteria.andEqualTo("baseId", baseId);
+            }
+
+            Date start = vo.getStartTime();
+            Date end = vo.getEndTime();
+            if (null != start && null != end) {
+                criteria.andBetween("date", start, end);
+            }
+
+            page = vo.getPage();
+            limit = vo.getLimit();
         }
 
-        String imei = vo.getImei();
-        if (StringUtils.isNotEmpty(imei)) {
-            criteria.andEqualTo("imei", imei);
-        }
-
-        String terminalType = vo.getTerminalType();
-        if (StringUtils.isNotEmpty(terminalType)) {
-            criteria.andEqualTo("terminalType", terminalType);
-        }
-
-        String sourceType = vo.getSourceType();
-        if (StringUtils.isNotEmpty(sourceType)) {
-            criteria.andEqualTo("sourceType", sourceType);
-        }
-
-        String sourceArea = vo.getSourceArea();
-        if (StringUtils.isNotEmpty(sourceArea)) {
-            criteria.andEqualTo("sourceArea", sourceArea);
-        }
-
-        String baseId = vo.getBaseId();
-        if (StringUtils.isNotEmpty(baseId)) {
-            criteria.andEqualTo("baseId", baseId);
-        }
-
-        Date start = vo.getStartTime();
-        Date end = vo.getEndTime();
-        if (null != start && null != end) {
-            criteria.andBetween("date", start, end);
-        }
-
-        int page = vo.getPage();
-        int limit = vo.getLimit();
         if (0 == page && 0 == limit) {
             page = 1;
             limit = 10;

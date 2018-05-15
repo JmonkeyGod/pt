@@ -80,8 +80,12 @@ public class MdnMonitorController extends BaseController<IMdnMonitorService, Mdn
     @RequestMapping(value = "/qbeap", method = RequestMethod.GET)
     @ResponseBody
     public TableResultResponse<MdnMonitor> queryByExampleAndPage(
-            @ApiParam("查询对象") @RequestBody MdnMonitorVo mdnMonitorVo) {
-        return mdnMonitorBiz.queryByExampleAndPage(mdnMonitorVo);
+            @ApiParam("查询对象") @RequestBody(required = false) MdnMonitorVo mdnMonitorVo) {
+        if(null == mdnMonitorVo){
+           return listByPage(1,10);
+        }else {
+            return mdnMonitorBiz.queryByExampleAndPage(mdnMonitorVo);
+        }
     }
 
 
