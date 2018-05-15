@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.oidd.pt.mapper.MdnMonitorMapper">
+
+    <resultMap id="commonQty" type="com.ai.oidd.pt.vo.CommonQty">
+        <id column="date" jdbcType="INTEGER" property="date"/>
+        <result column="qty" jdbcType="INTEGER" property="qty"/>
+    </resultMap>
+
+    <resultMap id="cityCodeQty" type="com.ai.oidd.pt.vo.CityCodeQty">
+        <id column="sourceArea" jdbcType="VARCHAR" property="cityCode"/>
+        <result column="qty" jdbcType="INTEGER" property="qty"/>
+    </resultMap>
+
+
+    <!-- 1、高危终端占比 -->
+    <select id="terminalRatioByDate"  resultType="float">
+        SELECT
+        FORMAT(
+        (SELECT COUNT(terminalType) FROM t_mdn_monitor
+        WHERE 1 = 1
+        <if test="null != start and ''!= start and 0 != start">
+        AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+        AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ <= ]]> #{end}
+        </if>
+        ) /
+        (SELECT COUNT(terminalType) FROM t_mdn_monitor)
+        ,2) AS ratio
+        FROM DUAL
+    </select>
+
+    <!-- 1-1 高危终端按天 -->
+    <select id="countTerminalByDate" resultMap="commonQty">
+        SELECT CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) AS DATE,
+        COUNT(terminalType)  AS qty FROM t_mdn_monitor
+        WHERE 1 = 1
+        <if test="null != start and ''!= start and 0 != start">
+        AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+        AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ <= ]]> #{end}
+        </if>
+        GROUP BY DATE
+    </select>
+
+    <!-- 2、高危号码占比 -->
+    <select id="mdnRatioByDate"  resultType="float">
+        SELECT
+        FORMAT(
+        (SELECT COUNT(mdn) FROM t_mdn_monitor
+        WHERE 1 = 1
+        <if test="null != start and ''!= start and 0 != start">
+            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ <= ]]> #{end}
+        </if>
+        ) /
+        (SELECT COUNT(mdn) FROM t_mdn_monitor)
+        ,2) AS ratio
+        FROM DUAL
+    </select>
+
+    <!-- 2-1 高危号码按天 -->
+    <select id="countMdnByDate" resultMap="commonQty">
+        SELECT CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) AS DATE,
+        COUNT(mdn)  AS qty FROM t_mdn_monitor
+        WHERE 1 = 1
+        <if test="null != start and ''!= start and 0 != start">
+            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ <= ]]> #{end}
+        </if>
+        GROUP BY DATE
+    </select>
+
+    <!-- 3、高危区域按天统计 -->
+    <select id="countAreaByDate" resultMap="cityCodeQty">
+        SELECT
+        sourceArea,
+        COUNT(sourceArea) AS qty
+        FROM
+        t_mdn_monitor
+        WHERE 1 = 1
+        <if test="null != start and ''!= start and 0 != start">
+            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ <= ]]> #{end}
+        </if>
+        GROUP BY sourceArea
+        ORDER BY qty DESC;
+    </select>
+
+
+
+
+
+
+
+
+
+</mapper>

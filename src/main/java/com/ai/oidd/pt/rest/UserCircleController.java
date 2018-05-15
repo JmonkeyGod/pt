@@ -4,7 +4,7 @@ import com.ai.oidd.pt.biz.UserCircleBiz;
 import com.ai.oidd.pt.common.msg.TableResultResponse;
 import com.ai.oidd.pt.entity.UserCircle;
 import com.ai.oidd.pt.service.IUserCircleService;
-import com.ai.oidd.pt.vo.MdnCityQty;
+import com.ai.oidd.pt.vo.CityCodeQty;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -34,11 +34,11 @@ public class UserCircleController extends BaseController<IUserCircleService,User
     @ApiOperation("用户活动范围 - 按照日期统计每天的活动范围量")
     @RequestMapping(value = "/cmcbcc", method = RequestMethod.GET)
     @ResponseBody
-    public TableResultResponse<MdnCityQty> countMdnCircleByCityCode(
+    public TableResultResponse<CityCodeQty> countMdnCircleByCityCode(
             @ApiParam("用户号码") @RequestParam(required = false) String mdn
             ,@ApiParam("开始日期") @RequestParam(required = false) Integer start
             ,@ApiParam("结束日期") @RequestParam(required = false) Integer end) {
-        List<MdnCityQty> mdnCityQties = userCircleBiz.countMdnCircleByCityCode(mdn,start, end);
+        List<CityCodeQty> mdnCityQties = userCircleBiz.countMdnCircleByCityCode(mdn,start, end);
         return new TableResultResponse<>(mdnCityQties.size(),mdnCityQties);
     }
 

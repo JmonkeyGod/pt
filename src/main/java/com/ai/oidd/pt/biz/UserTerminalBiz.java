@@ -2,8 +2,7 @@ package com.ai.oidd.pt.biz;
 
 import com.ai.oidd.pt.entity.UserTerminal;
 import com.ai.oidd.pt.mapper.UserTerminalMapper;
-import com.ai.oidd.pt.vo.MdnTerQty;
-import org.apache.ibatis.annotations.Param;
+import com.ai.oidd.pt.vo.CommonQty;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
@@ -22,7 +21,7 @@ public class UserTerminalBiz extends BaseBiz<UserTerminalMapper, UserTerminal> {
     /**
      * 用户终端 - 取最近的一条记录
      */
-    public UserTerminal queryUserTerminal(@Param("mdn") String mdn) {
+    public UserTerminal queryUserTerminal(String mdn) {
         Example example = new Example(UserTerminal.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("mdn", mdn);
@@ -44,7 +43,7 @@ public class UserTerminalBiz extends BaseBiz<UserTerminalMapper, UserTerminal> {
      * @param end
      * @return
      */
-    public List<MdnTerQty> countTerQtyByDate(@Param("mdn") String mdn, @Param("start") Integer start, @Param("end") Integer end) {
+    public List<CommonQty> countTerQtyByDate(String mdn, Integer start,Integer end) {
         return mapper.countTerQtyByDate(mdn, start, end);
     }
 }

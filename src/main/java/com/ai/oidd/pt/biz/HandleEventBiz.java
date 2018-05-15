@@ -2,7 +2,6 @@ package com.ai.oidd.pt.biz;
 
 import com.ai.oidd.pt.entity.HandleEvent;
 import com.ai.oidd.pt.mapper.HandleEventMapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
@@ -17,8 +16,7 @@ import java.util.List;
 @Service
 public class HandleEventBiz extends BaseBiz<HandleEventMapper,HandleEvent> {
 
-    public List<HandleEvent> getHandleEventByTime(@Param("start") Integer start
-            , @Param("end") Integer end) {
+    public List<HandleEvent> getHandleEventByTime(Integer start,Integer end) {
         Example example = new Example(HandleEvent.class);
 
         if(0 != start && 0!= end){

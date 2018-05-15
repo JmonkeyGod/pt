@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.oidd.pt.mapper.UserTerminalMapper">
 
-    <resultMap id="mdnTerQtys" type="com.ai.oidd.pt.vo.MdnTerQty">
+    <resultMap id="commonQty" type="com.ai.oidd.pt.vo.CommonQty">
         <id column="date" jdbcType="INTEGER" property="date"/>
         <result column="qty" jdbcType="INTEGER" property="qty"/>
     </resultMap>
 
 
     <!--  终端历史 -->
-    <select id="countTerQtyByDate" resultMap="mdnTerQtys">
+    <select id="countTerQtyByDate" resultMap="commonQty">
         SELECT
         DATE,
         COUNT(*) AS qty

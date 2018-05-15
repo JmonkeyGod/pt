@@ -4,7 +4,6 @@ import com.ai.oidd.pt.entity.TerminalEvent;
 import com.ai.oidd.pt.mapper.TerminalEventMapper;
 import com.ai.oidd.pt.vo.DailyTerEvents;
 import com.ai.oidd.pt.vo.TotalTerEvents;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,11 +17,11 @@ import java.util.List;
 @Service
 public class TerminalEventBiz extends BaseBiz<TerminalEventMapper, TerminalEvent> {
 
-    public List<TotalTerEvents> countTerminalEventByDate(@Param("start") Integer start, @Param("end") Integer end) {
+    public List<TotalTerEvents> countTerminalEventByDate(Integer start, Integer end) {
         return mapper.countTerminalEventByDate(start, end);
     }
 
-    public List<DailyTerEvents> countTerminalEventDaily(@Param("start") Integer start, @Param("end") Integer end) {
+    public List<DailyTerEvents> countTerminalEventDaily(Integer start, Integer end) {
         return mapper.countTerminalEventDaily(start, end);
     }
 

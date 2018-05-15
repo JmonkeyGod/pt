@@ -10,7 +10,7 @@ import lombok.Data;
  * @see com.ai.oidd.pt.entity.UserTerminal
  */
 @Data
-public class MdnTerQty {
+public class CommonQty {
     /**
      * 日期
      */

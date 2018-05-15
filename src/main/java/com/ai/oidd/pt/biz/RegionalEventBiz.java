@@ -18,8 +18,7 @@ import java.util.List;
 @Service
 public class RegionalEventBiz extends BaseBiz<RegionalEventMapper, RegionalEvent> {
 
-    public List<RegionalEvent> getRegionalEventByTime(@Param("start") Integer start
-            , @Param("end") Integer end) {
+    public List<RegionalEvent> getRegionalEventByTime(Integer start, Integer end) {
         Example example = new Example(RegionalEvent.class);
 
         if(0 != start && 0!= end){

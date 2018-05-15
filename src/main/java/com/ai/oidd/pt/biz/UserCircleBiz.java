@@ -2,8 +2,7 @@ package com.ai.oidd.pt.biz;
 
 import com.ai.oidd.pt.entity.UserCircle;
 import com.ai.oidd.pt.mapper.UserCircleMapper;
-import com.ai.oidd.pt.vo.MdnCityQty;
-import org.apache.ibatis.annotations.Param;
+import com.ai.oidd.pt.vo.CityCodeQty;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class UserCircleBiz extends BaseBiz<UserCircleMapper,UserCircle> {
      * @param end
      * @return
      */
-    public List<MdnCityQty> countMdnCircleByCityCode(@Param("mdn") String mdn,@Param("start") Integer start, @Param("end") Integer end) {
+    public List<CityCodeQty> countMdnCircleByCityCode(String mdn, Integer start, Integer end) {
         return mapper.countMdnCircleByCityCode(mdn,start, end);
     }
 }

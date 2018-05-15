@@ -1,7 +1,7 @@
 package com.ai.oidd.pt.mapper;
 
 import com.ai.oidd.pt.entity.UserCircle;
-import com.ai.oidd.pt.vo.MdnCityQty;
+import com.ai.oidd.pt.vo.CityCodeQty;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface UserCircleMapper extends Mapper<UserCircle> {
 
-    List<MdnCityQty> countMdnCircleByCityCode(@Param("mdn") String mdn,@Param("start") Integer start, @Param("end") Integer end);
+    List<CityCodeQty> countMdnCircleByCityCode(@Param("mdn") String mdn, @Param("start") Integer start, @Param("end") Integer end);
 }

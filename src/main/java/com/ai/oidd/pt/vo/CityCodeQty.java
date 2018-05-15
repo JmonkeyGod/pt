@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @see com.ai.oidd.pt.entity.UserCircle
  */
 @Data
-public class MdnCityQty implements Serializable {
+public class CityCodeQty implements Serializable {
     /**
      * 城市编码
      */
