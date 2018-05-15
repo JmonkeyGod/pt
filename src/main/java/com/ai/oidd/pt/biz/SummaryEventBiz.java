@@ -22,7 +22,6 @@ public class SummaryEventBiz extends BaseBiz<SummaryEventMapper,SummaryEvent> {
     public List<SummaryEvents> countSummaryEventByDate(@Param("start") Integer start
             , @Param("end") Integer end) {
         List<SummaryEvents> summaryEvents = mapper.countSummaryEventByDate(start, end);
-        System.out.println(summaryEvents);
         if(1== summaryEvents.size()){
             if(null == summaryEvents.get(0)){
                 return new ArrayList<>();

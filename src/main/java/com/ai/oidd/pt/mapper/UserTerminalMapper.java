@@ -15,5 +15,7 @@ import java.util.List;
  */
 public interface UserTerminalMapper extends Mapper<UserTerminal> {
 
+    UserTerminal queryUserTerminal(@Param("mdn") String mdn);
+
     List<MdnTerQty> countTerQtyByDate(@Param("mdn") String mdn,@Param("start") Integer start, @Param("end") Integer end);
 }

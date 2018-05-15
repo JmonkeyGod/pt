@@ -18,14 +18,11 @@ import java.util.List;
 @Service
 public class TerminalEventBiz extends BaseBiz<TerminalEventMapper, TerminalEvent> {
 
-
     public List<TotalTerEvents> countTerminalEventByDate(@Param("start") Integer start, @Param("end") Integer end) {
         return mapper.countTerminalEventByDate(start, end);
     }
 
     public List<DailyTerEvents> countTerminalEventDaily(@Param("start") Integer start, @Param("end") Integer end) {
-
-
         return mapper.countTerminalEventDaily(start, end);
     }
 
