@@ -3,6 +3,7 @@ package com.ai.oidd.pt.entity;
 import lombok.Data;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
@@ -18,11 +19,9 @@ public class UserFeature implements Serializable {
     /**
      * 用户号码
      */
+    @Id
     private String mdn;
-    /**
-     * 日期
-     */
-    private String date;
+
     /**
      * 平衡性
      */

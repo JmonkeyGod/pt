@@ -1,6 +1,6 @@
 package com.ai.oidd.pt.service;
 
-import com.ai.oidd.pt.entity.MdnAbnormalBehavor;
+import com.ai.oidd.pt.entity.MdnAbnBehavor;
 
 /**
  * Asiainfo-OIDD
@@ -8,5 +8,5 @@ import com.ai.oidd.pt.entity.MdnAbnormalBehavor;
  * @author sunbin-71738
  * @date 2018-04-28
  */
-public interface IMdnAbnormalBehavorService extends BaseService<MdnAbnormalBehavor> {
+public interface IMdnAbnormalBehavorService extends BaseService<MdnAbnBehavor> {
 }

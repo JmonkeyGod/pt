@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.oidd.pt.mapper.UserCommQtyMapper">
+
+    <resultMap id="mdnQty" type="com.ai.oidd.pt.vo.MdnQty">
+        <id column="date" jdbcType="INTEGER" property="date"/>
+        <result column="cms" jdbcType="INTEGER" property="cms"/>
+        <result column="sms" jdbcType="INTEGER" property="sms"/>
+    </resultMap>
+
+
+    <!--  通信趋势 -->
+    <select id="countMdnQtyByDate" resultMap="mdnQty">
+        SELECT
+        DATE,
+        SUM(callingNum + calledNum) AS cms,
+        SUM(mailingNum + mailedNum) AS sms
+        FROM
+        t_user_commQty
+        WHERE 1=1
+        <if test="null != mdn and ''!= mdn and 0 != mdn">
+            AND mdn = #{mdn}
+        </if>
+        <if test="null != start and ''!= start and 0 != start">
+            AND DATE <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+            AND DATE <![CDATA[ <= ]]> #{end}
+        </if>
+        GROUP BY DATE;
+    </select>
+
+
+
+
+
+</mapper>

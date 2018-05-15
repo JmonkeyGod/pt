@@ -1,6 +1,6 @@
 package com.ai.oidd.pt.service;
 
-import com.ai.oidd.pt.entity.MdnEventStatistic;
+import com.ai.oidd.pt.entity.MdnSuspStats;
 
 /**
  * Asiainfo-OIDD
@@ -8,5 +8,5 @@ import com.ai.oidd.pt.entity.MdnEventStatistic;
  * @author sunbin-71738
  * @date 2018-04-28
  */
-public interface IMdnEventStatisticService extends BaseService<MdnEventStatistic> {
+public interface IMdnSuspStatsService extends BaseService<MdnSuspStats> {
 }

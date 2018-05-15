@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.oidd.pt.mapper.UserCircleMapper">
+
+    <resultMap id="mdnCityQty" type="com.ai.oidd.pt.vo.MdnCityQty">
+        <id column="cityCode" jdbcType="VARCHAR" property="cityCode"/>
+        <result column="qty" jdbcType="INTEGER" property="qty"/>
+    </resultMap>
+
+
+    <!--  通信趋势 -->
+    <select id="countMdnCircleByCityCode" resultMap="mdnCityQty">
+        SELECT
+        cityCode,
+        COUNT(*) AS qty
+        FROM
+        t_user_circle
+        WHERE 1 = 1
+        <if test="null != mdn and ''!= mdn and 0 != mdn">
+            AND mdn = #{mdn}
+        </if>
+        <if test="null != start and ''!= start and 0 != start">
+        AND DATE <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+        AND DATE <![CDATA[ <= ]]> #{end}
+        </if>
+        GROUP BY cityCode ASC;
+    </select>
+
+
+
+
+
+</mapper>

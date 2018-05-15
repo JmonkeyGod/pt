@@ -21,7 +21,7 @@ public interface BaseService<T> {
     T selectOne(T entity);
 
     /**
-     * 通过Id查询
+     * 通过mdn查询
      *
      * @param id
      * @return
@@ -75,7 +75,7 @@ public interface BaseService<T> {
      */
     List<T> selectByExample(Object example);
 
-    TableResultResponse<T> selectByQuery(Query query);
+    TableResultResponse<T> listByPage(Query query);
 
     /**
      * 添加
@@ -97,22 +97,22 @@ public interface BaseService<T> {
      *
      * @param entity
      */
-    void delete(T entity);
+//    void delete(T entity);
 
     /**
-     * 根据Id删除
+     * 根据mdn删除
      *
-     * @param id
+     * @param mdn
      */
-    void deleteById(Object id);
+//    void deleteByMdn(Object mdn);
 
 
     /**
-     * 根据id更新
+     * 根据mdn更新
      *
      * @param entity
      */
-    void updateById(T entity);
+//    void updateByMdn(T entity);
 
 
     /**
@@ -120,7 +120,7 @@ public interface BaseService<T> {
      *
      * @param entity
      */
-    void updateSelectiveById(T entity);
+//    void updateSelectiveByMdn(T entity);
 
     /**
      * 根据ID集合批量删除

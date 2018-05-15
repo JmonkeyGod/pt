@@ -22,36 +22,12 @@ public class BaseController<Base extends BaseService, Entity> {
     @Autowired
     protected Base base;
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public ObjectRestResponse<Entity> add(@RequestBody Entity entity) {
         base.insertSelective(entity);
         return new ObjectRestResponse<>();
     }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public ObjectRestResponse<Entity> get(@PathVariable int id) {
-        ObjectRestResponse<Entity> entityObjectRestResponse = new ObjectRestResponse<>();
-        Object o = base.selectById(id);
-        entityObjectRestResponse.data((Entity) o);
-        return entityObjectRestResponse;
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    @ResponseBody
-    public ObjectRestResponse<Entity> update(@RequestBody Entity entity) {
-        base.updateSelectiveById(entity);
-        return new ObjectRestResponse<>();
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @ResponseBody
-    public ObjectRestResponse<Entity> remove(@PathVariable int id) {
-        base.deleteById(id);
-        return new ObjectRestResponse<>();
-    }
-
 
     @RequestMapping(value = "/all",method = RequestMethod.GET)
     @ResponseBody
@@ -66,7 +42,7 @@ public class BaseController<Base extends BaseService, Entity> {
         Query query = new Query();
         query.setLimit(limit);
         query.setPage(page);
-        return base.selectByQuery(query);
+        return base.listByPage(query);
     }
 
 }

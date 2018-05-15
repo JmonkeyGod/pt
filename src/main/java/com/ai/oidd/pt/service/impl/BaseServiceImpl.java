@@ -32,6 +32,7 @@ public class BaseServiceImpl<M extends Mapper<T>, T> implements BaseService<T> {
         return mapper.selectByPrimaryKey(id);
     }
 
+
 //    @Override
 //    public List<T> selectListByIds(List<Object> ids) {
 //        return mapper.selectByIds(ids);
@@ -53,8 +54,9 @@ public class BaseServiceImpl<M extends Mapper<T>, T> implements BaseService<T> {
     }
 
     @Override
-    public TableResultResponse<T> selectByQuery(Query query) {
-        Class<T> clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+    public TableResultResponse<T> listByPage(Query query) {
+        Class<T> clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+                .getActualTypeArguments()[1];
 
         Example example = new Example(clazz);
 
@@ -76,26 +78,6 @@ public class BaseServiceImpl<M extends Mapper<T>, T> implements BaseService<T> {
     @Override
     public void insertSelective(T entity) {
         mapper.insertSelective(entity);
-    }
-
-    @Override
-    public void delete(T entity) {
-        mapper.delete(entity);
-    }
-
-    @Override
-    public void deleteById(Object id) {
-        mapper.deleteByPrimaryKey(id);
-    }
-
-    @Override
-    public void updateById(T entity) {
-        mapper.updateByPrimaryKey(entity);
-    }
-
-    @Override
-    public void updateSelectiveById(T entity) {
-        mapper.updateByPrimaryKeySelective(entity);
     }
 
 //    @Override

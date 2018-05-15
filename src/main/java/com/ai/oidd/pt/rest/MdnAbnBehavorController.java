@@ -1,6 +1,6 @@
 package com.ai.oidd.pt.rest;
 
-import com.ai.oidd.pt.entity.MdnAbnormalBehavor;
+import com.ai.oidd.pt.entity.MdnAbnBehavor;
 import com.ai.oidd.pt.service.IMdnAbnormalBehavorService;
 import io.swagger.annotations.Api;
 import org.springframework.stereotype.Controller;
@@ -15,5 +15,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("mabc")
 @Api(value = "mdnAbnormalBehavorController", tags = {"异常行为操作接口"})
-public class MdnAbnormalBehavorController extends BaseController<IMdnAbnormalBehavorService, MdnAbnormalBehavor> {
+public class MdnAbnBehavorController extends BaseController<IMdnAbnormalBehavorService, MdnAbnBehavor> {
 }

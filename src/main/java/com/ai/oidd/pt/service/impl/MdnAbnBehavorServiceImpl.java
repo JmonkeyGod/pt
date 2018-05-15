@@ -1,6 +1,6 @@
 package com.ai.oidd.pt.service.impl;
 
-import com.ai.oidd.pt.entity.MdnAbnormalBehavor;
+import com.ai.oidd.pt.entity.MdnAbnBehavor;
 import com.ai.oidd.pt.mapper.MdnAbnormalBehavorMapper;
 import com.ai.oidd.pt.service.IMdnAbnormalBehavorService;
 import org.springframework.stereotype.Service;
@@ -12,6 +12,6 @@ import org.springframework.stereotype.Service;
  * @date 2018-04-28
  */
 @Service("mdnAbnormalBehavorService")
-public class MdnAbnormalBehavorServiceImpl extends BaseServiceImpl<MdnAbnormalBehavorMapper, MdnAbnormalBehavor>
+public class MdnAbnBehavorServiceImpl extends BaseServiceImpl<MdnAbnormalBehavorMapper, MdnAbnBehavor>
         implements IMdnAbnormalBehavorService {
 }

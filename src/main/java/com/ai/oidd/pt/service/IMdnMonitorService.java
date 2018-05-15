@@ -1,6 +1,6 @@
 package com.ai.oidd.pt.service;
 
-import com.ai.oidd.pt.entity.MdnEventMonitor;
+import com.ai.oidd.pt.entity.MdnMonitor;
 
 /**
  * Asiainfo-OIDD
@@ -8,5 +8,5 @@ import com.ai.oidd.pt.entity.MdnEventMonitor;
  * @author sunbin-71738
  * @date 2018-04-28
  */
-public interface IMdnEventMonitorService extends BaseService<MdnEventMonitor> {
+public interface IMdnMonitorService extends BaseService<MdnMonitor> {
 }

@@ -22,7 +22,7 @@ public class UserTerminal implements Serializable {
     /**
      * 时间
      */
-    private String time;
+    private int date;
     /**
      * 终端串号
      */

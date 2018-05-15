@@ -22,7 +22,7 @@ public class UserCircle implements Serializable {
     /**
      *  时间
      */
-    private String time;
+    private int date;
     /**
      *  城市编码
      */

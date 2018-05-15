@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @date 2018-05-14
  */
 @Data
-@Table(name = "t_user_commQty")
+@Table(name = "t_user_commqty")
 public class UserCommQty implements Serializable {
     /**
      *  用户号码
@@ -22,7 +22,7 @@ public class UserCommQty implements Serializable {
     /**
      *  日期
      */
-    private String date;
+    private int date;
     /**
      *  主叫数量
      */

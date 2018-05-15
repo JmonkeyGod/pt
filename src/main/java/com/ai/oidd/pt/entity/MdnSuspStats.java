@@ -3,22 +3,19 @@ package com.ai.oidd.pt.entity;
 import lombok.Data;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Asiainfo-OIDD
- * 高危号码监测
+ * 疑似号码统计
  * @author sunbin-71738
  * @date 2018-04-27
  */
 @Data
-public class MdnEventMonitor implements Serializable {
-
-
-    @Id
-    private int id;
+@Table(name = "t_mdn_suspstats")
+public class MdnSuspStats implements Serializable {
 
     /**
      * 识别时间
@@ -29,17 +26,6 @@ public class MdnEventMonitor implements Serializable {
      * 疑似号码
      */
     private String mdn;
-
-    /**
-     * 终端串号
-     */
-    private String imei;
-
-    /**
-     * 终端类型
-     */
-    @Column(name ="terminalType")
-    private String terminalType;
 
     /**
      * 识别源
@@ -56,8 +42,20 @@ public class MdnEventMonitor implements Serializable {
     /**
      * 归属地
      */
-    @Column(name ="hcode")
-    private String hcode;
+    @Column(name ="baseId")
+    private String baseId;
+
+    /**
+     * 最近活跃时间
+     */
+    @Column(name = "lastUpdateDate")
+    private Date lastUpdateDate;
+
+    /**
+     * 活跃度
+     */
+    @Column(name = "activeness")
+    private float activeness;
 
     /**
      * 备注

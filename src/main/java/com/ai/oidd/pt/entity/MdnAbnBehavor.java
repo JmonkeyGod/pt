@@ -3,7 +3,7 @@ package com.ai.oidd.pt.entity;
 import lombok.Data;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,10 +14,8 @@ import java.util.Date;
  * @date 2018-04-27
  */
 @Data
-public class MdnAbnormalBehavor implements Serializable {
-    @Id
-    private int id;
-
+@Table(name="t_mdn_abn_behavor")
+public class MdnAbnBehavor implements Serializable {
     /**
      * 疑似号码
      */
@@ -26,8 +24,8 @@ public class MdnAbnormalBehavor implements Serializable {
     /**
      * 归属地
      */
-    @Column(name ="hcode")
-    private String hcode;
+    @Column(name ="baseId")
+    private String baseId;
 
     /**
      * 异常类型
