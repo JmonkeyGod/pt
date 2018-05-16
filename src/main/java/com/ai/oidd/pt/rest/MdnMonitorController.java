@@ -77,10 +77,10 @@ public class MdnMonitorController extends BaseController<IMdnMonitorService, Mdn
 
 
     @ApiOperation("高危号码复杂查询")
-    @RequestMapping(value = "/qbeap", method = RequestMethod.GET)
+    @RequestMapping(value = "/qbeap", method = RequestMethod.POST)
     @ResponseBody
     public TableResultResponse<MdnMonitor> queryByExampleAndPage(
-            @ApiParam("查询对象") @RequestBody(required = false) MdnMonitorVo mdnMonitorVo) {
+            @ApiParam("查询对象") @RequestBody MdnMonitorVo mdnMonitorVo) {
         if(null == mdnMonitorVo){
            return listByPage(1,10);
         }else {

@@ -134,7 +134,7 @@ public class MdnMonitorBiz extends BaseBiz<MdnMonitorMapper, MdnMonitor> {
             Date start = vo.getStartTime();
             Date end = vo.getEndTime();
             if (null != start && null != end) {
-                criteria.andBetween("date", start, end);
+                criteria.andBetween("time", start, end);
             }
 
             page = vo.getPage();
