@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("sec")
-@Api(value="summaryEventController",tags={"疑似欺诈、疑似受害"})
+@Api(value = "疑似欺诈、疑似受害", tags = {"疑似欺诈、疑似受害"},description = "api")
 public class SummaryEventController extends BaseController<ISummaryEventService,SummaryEvent> {
 
     @Autowired

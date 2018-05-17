@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("ric")
-@Api(value="regionInfoController",tags={"区域编码名称"})
+@Api(value = "区域编码", tags = {"区域编码"},description = "api")
 public class RegionInfoController extends BaseController<IRegionalEventService,RegionInfo> {
     //只提供增删改查操作
 }

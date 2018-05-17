@@ -25,7 +25,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("ucqc")
-@Api(value = "UserCommQtyController", tags = {"用户通讯量"})
+@Api(value = "用户通讯量", tags = {"用户通讯量"},description = "api")
 public class UserCommQtyController extends BaseController<IUserCommQtyService,UserCommQty> {
 
     @Autowired

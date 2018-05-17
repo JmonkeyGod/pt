@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("hec")
-@Api(value = "HandleEventController", tags = {"疑似号码发现&关停"})
+@Api(value = "疑似号码发现&关停", tags = {"疑似号码发现&关停"},description = "api")
 public class HandleEventController extends BaseController<IHandleEventService, HandleEvent> {
 
     @Autowired

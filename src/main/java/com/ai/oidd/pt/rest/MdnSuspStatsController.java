@@ -14,6 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("mssc")
-@Api(value = "MdnSuspectedStatsController", tags = {"疑似号码统计操作接口"})
+@Api(value = "疑似号码统计", tags = {"疑似号码统计"},description = "api")
 public class MdnSuspStatsController extends BaseController<IMdnSuspStatsService, MdnSuspStats> {
 }

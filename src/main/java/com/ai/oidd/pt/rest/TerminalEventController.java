@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("tec")
-@Api(value = "terminalEventController", tags = {"高危终端"})
+@Api(value = "高危终端", tags = {"高危终端"},description = "api")
 public class TerminalEventController extends BaseController<ITerminalEventService, TerminalEvent> {
 
     @Autowired

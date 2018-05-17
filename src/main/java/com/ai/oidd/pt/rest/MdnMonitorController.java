@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("mmc")
-@Api(value = "MdnMonitorController", tags = {"高危号码监测"})
+@Api(value = "高危号码监测", tags = {"高危号码监测"},description = "api")
 public class MdnMonitorController extends BaseController<IMdnMonitorService, MdnMonitor> {
 
     @Autowired

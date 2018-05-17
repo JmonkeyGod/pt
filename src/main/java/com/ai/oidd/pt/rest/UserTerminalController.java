@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("utc")
-@Api(value = "UserTerminalController", tags = {"用户终端"})
+@Api(value = "用户终端", tags = {"用户终端"},description = "api")
 public class UserTerminalController extends BaseController<IUserTerminalService, UserTerminal> {
 
     @Autowired

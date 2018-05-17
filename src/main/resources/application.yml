@@ -48,5 +48,10 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
 
+swagger:
+  title: oidd
+  exclude-path: /error, /actuator/**
+
+
 
 

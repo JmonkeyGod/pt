@@ -14,6 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("rcc")
-@Api(value="reportCaseController",tags={"报案数据"})
+@Api(value = "报案数据", tags = {"报案数据"},description = "api")
 public class ReportCaseController extends BaseController<IReportCaseService,ReportCase > {
 }
