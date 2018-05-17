@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.oidd.pt.mapper.MdnSuspStatsMapper">
+
+    <resultMap id="commonQty" type="com.ai.oidd.pt.vo.CommonQty">
+        <id column="date" jdbcType="INTEGER" property="date"/>
+        <result column="qty" jdbcType="INTEGER" property="qty"/>
+    </resultMap>
+
+    <resultMap id="cityCodeQty" type="com.ai.oidd.pt.vo.CityCodeQty">
+        <id column="sourceArea" jdbcType="VARCHAR" property="cityCode"/>
+        <result column="qty" jdbcType="INTEGER" property="qty"/>
+    </resultMap>
+
+    <!-- 1、按天统计高危区域 -->
+    <select id="countAreaByDate" resultMap="cityCodeQty">
+        SELECT
+        sourceArea,
+        COUNT(sourceArea) AS qty
+        FROM
+        t_mdn_suspstats
+        WHERE 1 = 1
+        <if test="null != start and ''!= start and 0 != start">
+            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ <= ]]> #{end}
+        </if>
+        GROUP BY sourceArea
+        ORDER BY qty DESC
+        <if test="null != index and 0!= index and null != size and 0!= size">
+            LIMIT #{index},#{size};
+        </if>
+    </select>
+
+    <!-- 识别源占比 -->
+    <select id="sourceTypeRatioByDate" resultType="java.lang.Float">
+        SELECT
+        FORMAT(
+        (SELECT COUNT(*) FROM t_mdn_suspstats
+        WHERE 1 = 1
+        AND sourceType = #{sourceType}
+        <if test="null != start and ''!= start and 0 != start">
+        AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+        AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
+        </if>
+        ) /
+        (SELECT COUNT(*) FROM t_mdn_suspstats)
+        ,2
+        ) AS ratio
+        FROM
+        DUAL;
+    </select>
+
+    <select id="countMdnByDate" resultType="java.lang.Integer">
+        SELECT COUNT(mdn)
+        FROM
+        t_mdn_suspstats
+        WHERE 1 = 1
+        <if test="null != start and ''!= start and 0 != start">
+        AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+        AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ <= ]]> #{end};
+        </if>
+    </select>
+
+
+</mapper>
