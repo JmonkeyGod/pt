@@ -4,7 +4,7 @@ import com.ai.oidd.pt.biz.UserTerminalBiz;
 import com.ai.oidd.pt.common.msg.TableResultResponse;
 import com.ai.oidd.pt.entity.UserTerminal;
 import com.ai.oidd.pt.service.IUserTerminalService;
-import com.ai.oidd.pt.vo.CommonQty;
+import com.ai.oidd.pt.vo.CommonDateQty;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("utc")
-@Api(value = "用户终端", tags = {"用户终端"},description = "api")
+@Api(value = "用户终端", tags = {"用户终端"},description = "utc")
 public class UserTerminalController extends BaseController<IUserTerminalService, UserTerminal> {
 
     @Autowired
@@ -35,11 +35,11 @@ public class UserTerminalController extends BaseController<IUserTerminalService,
     @ApiOperation("用户终端 - 按日期统计每天的终端量")
     @RequestMapping(value = "/ctqbd", method = RequestMethod.GET)
     @ResponseBody
-    public TableResultResponse<CommonQty> countTerQtyByDate(
+    public TableResultResponse<CommonDateQty> countTerQtyByDate(
              @ApiParam("用户号码") @RequestParam(required = false) String mdn
             , @ApiParam("开始日期") @RequestParam(required = false) Integer start
             , @ApiParam("结束日期") @RequestParam(required = false) Integer end) {
-        List<CommonQty> mdnTerQties = userTerminalBiz.countTerQtyByDate(mdn,start, end);
+        List<CommonDateQty> mdnTerQties = userTerminalBiz.countTerQtyByDate(mdn,start, end);
         return new TableResultResponse<>(mdnTerQties.size(), mdnTerQties);
     }
 }

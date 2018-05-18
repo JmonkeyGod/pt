@@ -6,12 +6,12 @@ import com.ai.oidd.pt.entity.MdnMonitor;
 import com.ai.oidd.pt.entity.MdnSuspStats;
 import com.ai.oidd.pt.mapper.MdnSuspStatsMapper;
 import com.ai.oidd.pt.vo.CityCodeQty;
-import com.ai.oidd.pt.vo.CommonRatio;
+import com.ai.oidd.pt.vo.CommonQty;
 import com.ai.oidd.pt.vo.MdnSuspStatsVo;
+import com.ai.oidd.pt.vo.SourceTypeVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
@@ -22,14 +22,13 @@ import java.util.List;
 /**
  * Asiainfo-OIDD
  * 疑似号码统计 biz
+ *
  * @author sunbin-71738
  * @date 2018-05-17
  */
 @Service
 public class MdnSuspStatsBiz extends BaseBiz<MdnSuspStatsMapper, MdnSuspStats> {
 
-    @Value("${oidd.sourceType}")
-    private String sourceType;
 
     /**
      * 识别源占比
@@ -38,22 +37,24 @@ public class MdnSuspStatsBiz extends BaseBiz<MdnSuspStatsMapper, MdnSuspStats> {
      * @param end
      * @return
      */
-    public TableResultResponse<CommonRatio> sourceTypeRatioByDate(int start, int end) {
+    public TableResultResponse<SourceTypeVo> sourceTypeRatioByDate(Integer start, Integer end) {
 
-        String[] types = sourceType.split(",");
+        List<CommonQty> qtys = mapper.countSourceTypeByDate(start, end);
+        int total = mapper.selectCountByExample(new Example(MdnSuspStats.class));
 
-        float raito;
-        CommonRatio commonRatio;
-        List<CommonRatio> ratios = new ArrayList<>();
-        for(String s: types){
-            commonRatio = new CommonRatio();
-            raito = mapper.sourceTypeRatioByDate(s, start, end);
-            commonRatio.setName(s);
-            commonRatio.setRatio(raito);
-            ratios.add(commonRatio);
+        List<SourceTypeVo> sourceTypeVos = new ArrayList<>();
+        SourceTypeVo vo;
+        float ratio;
+        for (CommonQty commonQty : qtys) {
+            vo = new SourceTypeVo();
+            vo.setSourceName(commonQty.getName());
+            vo.setCounts(commonQty.getQty());
+            ratio = (float) commonQty.getQty()/ total;
+            vo.setRatio(ratio);
+            sourceTypeVos.add(vo);
         }
 
-        return new TableResultResponse<>(ratios.size(), ratios);
+        return new TableResultResponse<>(sourceTypeVos.size(), sourceTypeVos);
     }
 
     /**
@@ -91,39 +92,45 @@ public class MdnSuspStatsBiz extends BaseBiz<MdnSuspStatsMapper, MdnSuspStats> {
     public TableResultResponse<MdnSuspStats> queryByExampleAndPage(MdnSuspStatsVo vo) {
         Example example = new Example(MdnMonitor.class);
         Example.Criteria criteria = example.createCriteria();
-
+        boolean isCriteria = false;
         int page = 1;
         int limit = 10;
         if (null != vo) {
             String mdn = vo.getMdn();
             if (StringUtils.isNotEmpty(mdn)) {
+                isCriteria = true;
                 criteria.andEqualTo("mdn", mdn);
             }
 
             String sourceType = vo.getSourceType();
             if (StringUtils.isNotEmpty(sourceType)) {
+                isCriteria = true;
                 criteria.andEqualTo("sourceType", sourceType);
             }
 
             String sourceArea = vo.getSourceArea();
             if (StringUtils.isNotEmpty(sourceArea)) {
+                isCriteria = true;
                 criteria.andEqualTo("sourceArea", sourceArea);
             }
 
             String baseId = vo.getBaseId();
             if (StringUtils.isNotEmpty(baseId)) {
+                isCriteria = true;
                 criteria.andEqualTo("baseId", baseId);
             }
 
             Date start = vo.getStartTime();
             Date end = vo.getEndTime();
             if (null != start && null != end) {
+                isCriteria = true;
                 criteria.andBetween("time", start, end);
             }
 
             Date lastDateStart = vo.getLastDateStart();
             Date lastDateEnd = vo.getLastDateEnd();
             if (null != lastDateStart && null != lastDateEnd) {
+                isCriteria = true;
                 criteria.andBetween("lastUpdateDate", lastDateStart, lastDateEnd);
             }
 
@@ -131,13 +138,20 @@ public class MdnSuspStatsBiz extends BaseBiz<MdnSuspStatsMapper, MdnSuspStats> {
             limit = vo.getLimit();
         }
 
+
         if (0 == page && 0 == limit) {
             page = 1;
             limit = 10;
         }
 
         Page<Object> result = PageHelper.startPage(page, limit);
-        List<MdnSuspStats> list = mapper.selectByExample(example);
+
+        List<MdnSuspStats> list;
+        if (isCriteria) {
+            list = mapper.selectByExample(example);
+        }else {
+            list = mapper.selectByExample(new Example(MdnSuspStats.class));
+        }
 
         return new TableResultResponse<>(result.getTotal(), list);
     }

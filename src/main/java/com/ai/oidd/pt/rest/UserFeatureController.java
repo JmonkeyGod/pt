@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("ufc")
-@Api(value = "用户特征", tags = {"用户特征"},description = "api")
+@Api(value = "用户特征", tags = {"用户特征"},description = "ufc")
 public class UserFeatureController extends BaseController<IUserFeatureService, UserFeature> {
 
     @Autowired

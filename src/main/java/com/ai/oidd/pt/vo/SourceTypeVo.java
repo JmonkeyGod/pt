@@ -11,7 +11,8 @@ import java.io.Serializable;
  * @date 2018-05-18
  */
 @Data
-public class CommonQty implements Serializable {
-    private String name;
-    private int qty;
+public class SourceTypeVo implements Serializable {
+    private String sourceName;
+    private int counts;
+    private float ratio;
 }

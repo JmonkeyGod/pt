@@ -6,7 +6,7 @@ import com.ai.oidd.pt.common.msg.TableResultResponse;
 import com.ai.oidd.pt.entity.MdnMonitor;
 import com.ai.oidd.pt.service.IMdnMonitorService;
 import com.ai.oidd.pt.vo.CityCodeQty;
-import com.ai.oidd.pt.vo.CommonQty;
+import com.ai.oidd.pt.vo.CommonDateQty;
 import com.ai.oidd.pt.vo.MdnMonitorVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("mmc")
-@Api(value = "高危号码监测", tags = {"高危号码监测"},description = "api")
+@Api(value = "高危号码监测", tags = {"高危号码监测"}, description = "mmc")
 public class MdnMonitorController extends BaseController<IMdnMonitorService, MdnMonitor> {
 
     @Autowired
@@ -41,7 +41,7 @@ public class MdnMonitorController extends BaseController<IMdnMonitorService, Mdn
     @ApiOperation("高危终端按天")
     @RequestMapping(value = "/ctbd", method = RequestMethod.GET)
     @ResponseBody
-    public TableResultResponse<CommonQty> countTerminalByDate(
+    public TableResultResponse<CommonDateQty> countTerminalByDate(
             @ApiParam("开始日期") @RequestParam(required = false) Integer start
             , @ApiParam("结束日期") @RequestParam(required = false) Integer end) {
         return mdnMonitorBiz.countTerminalByDate(start, end);
@@ -59,7 +59,7 @@ public class MdnMonitorController extends BaseController<IMdnMonitorService, Mdn
     @ApiOperation("高危号码按天")
     @RequestMapping(value = "/cmbd", method = RequestMethod.GET)
     @ResponseBody
-    public TableResultResponse<CommonQty> countMdnByDate(
+    public TableResultResponse<CommonDateQty> countMdnByDate(
             @ApiParam("开始日期") @RequestParam(required = false) Integer start
             , @ApiParam("结束日期") @RequestParam(required = false) Integer end) {
         return mdnMonitorBiz.countMdnByDate(start, end);
@@ -81,11 +81,7 @@ public class MdnMonitorController extends BaseController<IMdnMonitorService, Mdn
     @ResponseBody
     public TableResultResponse<MdnMonitor> queryByExampleAndPage(
             @ApiParam("查询对象") @RequestBody MdnMonitorVo mdnMonitorVo) {
-        if(null == mdnMonitorVo){
-           return listByPage(1,10);
-        }else {
-            return mdnMonitorBiz.queryByExampleAndPage(mdnMonitorVo);
-        }
+        return mdnMonitorBiz.queryByExampleAndPage(mdnMonitorVo);
     }
 
 

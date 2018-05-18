@@ -6,8 +6,8 @@ import com.ai.oidd.pt.common.msg.TableResultResponse;
 import com.ai.oidd.pt.entity.MdnSuspStats;
 import com.ai.oidd.pt.service.IMdnSuspStatsService;
 import com.ai.oidd.pt.vo.CityCodeQty;
-import com.ai.oidd.pt.vo.CommonRatio;
 import com.ai.oidd.pt.vo.MdnSuspStatsVo;
+import com.ai.oidd.pt.vo.SourceTypeVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("mssc")
-@Api(value = "疑似号码统计", tags = {"疑似号码统计"}, description = "api")
+@Api(value = "疑似号码统计", tags = {"疑似号码统计"}, description = "mssc")
 public class MdnSuspStatsController extends BaseController<IMdnSuspStatsService, MdnSuspStats> {
 
     @Autowired
@@ -33,7 +33,7 @@ public class MdnSuspStatsController extends BaseController<IMdnSuspStatsService,
     @ApiOperation("识别源占比")
     @RequestMapping(value = "/strbd", method = RequestMethod.GET)
     @ResponseBody
-    public TableResultResponse<CommonRatio> sourceTypeRatioByDate(
+    public TableResultResponse<SourceTypeVo> sourceTypeRatioByDate(
             @ApiParam("开始日期") @RequestParam(required = false) Integer start
             , @ApiParam("结束日期") @RequestParam(required = false) Integer end) {
         return mdnSuspStatsBiz.sourceTypeRatioByDate(start, end);
@@ -62,11 +62,7 @@ public class MdnSuspStatsController extends BaseController<IMdnSuspStatsService,
     @ResponseBody
     public TableResultResponse<MdnSuspStats> queryByExampleAndPage(
             @ApiParam("查询对象") @RequestBody MdnSuspStatsVo mdnSuspStatsVo) {
-        if (null == mdnSuspStatsVo) {
-            return listByPage(1, 10);
-        } else {
-            return mdnSuspStatsBiz.queryByExampleAndPage(mdnSuspStatsVo);
-        }
+        return mdnSuspStatsBiz.queryByExampleAndPage(mdnSuspStatsVo);
     }
 
     @ApiOperation("按日期计算总量")

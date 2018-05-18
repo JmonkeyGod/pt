@@ -2,7 +2,7 @@ package com.ai.oidd.pt.mapper;
 
 import com.ai.oidd.pt.entity.MdnMonitor;
 import com.ai.oidd.pt.vo.CityCodeQty;
-import com.ai.oidd.pt.vo.CommonQty;
+import com.ai.oidd.pt.vo.CommonDateQty;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -30,7 +30,7 @@ public interface MdnMonitorMapper extends Mapper<MdnMonitor> {
      * @param end
      * @return
      */
-    List<CommonQty> countTerminalByDate(@Param("start") Integer start, @Param("end") Integer end);
+    List<CommonDateQty> countTerminalByDate(@Param("start") Integer start, @Param("end") Integer end);
 
     /**
      *  高危号码占比
@@ -46,7 +46,7 @@ public interface MdnMonitorMapper extends Mapper<MdnMonitor> {
      * @param end
      * @return
      */
-    List<CommonQty> countMdnByDate(@Param("start") Integer start, @Param("end") Integer end);
+    List<CommonDateQty> countMdnByDate(@Param("start") Integer start, @Param("end") Integer end);
 
     /**
      *  高危区域按天

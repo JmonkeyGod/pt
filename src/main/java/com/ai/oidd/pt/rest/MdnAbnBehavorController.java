@@ -14,6 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("mabc")
-@Api(value = "异常行为", tags = {"异常行为"},description = "api")
+@Api(value = "异常行为", tags = {"异常行为"},description = "mabc")
 public class MdnAbnBehavorController extends BaseController<IMdnAbnormalBehavorService, MdnAbnBehavor> {
 }

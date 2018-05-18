@@ -2,7 +2,7 @@ package com.ai.oidd.pt.biz;
 
 import com.ai.oidd.pt.entity.UserTerminal;
 import com.ai.oidd.pt.mapper.UserTerminalMapper;
-import com.ai.oidd.pt.vo.CommonQty;
+import com.ai.oidd.pt.vo.CommonDateQty;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
@@ -16,7 +16,6 @@ import java.util.List;
  */
 @Service
 public class UserTerminalBiz extends BaseBiz<UserTerminalMapper, UserTerminal> {
-
 
     /**
      * 用户终端 - 取最近的一条记录
@@ -33,7 +32,6 @@ public class UserTerminalBiz extends BaseBiz<UserTerminalMapper, UserTerminal> {
         } else {
             return null;
         }
-
     }
 
     /**
@@ -43,7 +41,7 @@ public class UserTerminalBiz extends BaseBiz<UserTerminalMapper, UserTerminal> {
      * @param end
      * @return
      */
-    public List<CommonQty> countTerQtyByDate(String mdn, Integer start,Integer end) {
+    public List<CommonDateQty> countTerQtyByDate(String mdn, Integer start, Integer end) {
         return mapper.countTerQtyByDate(mdn, start, end);
     }
 }

@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("rec")
-@Api(value = "高危区域分析", tags = {"高危区域分析"},description = "api")
+@Api(value = "高危区域分析", tags = {"高危区域分析"},description = "rec")
 public class RegionalEventController extends BaseController<IRegionalEventService, RegionalEvent> {
 
     @Autowired

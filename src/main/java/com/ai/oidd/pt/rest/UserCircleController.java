@@ -25,7 +25,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("ucc")
-@Api(value = "用户活动范围", tags = {"用户活动范围"},description = "api")
+@Api(value = "用户活动范围", tags = {"用户活动范围"},description = "ucc")
 public class UserCircleController extends BaseController<IUserCircleService,UserCircle> {
 
     @Autowired

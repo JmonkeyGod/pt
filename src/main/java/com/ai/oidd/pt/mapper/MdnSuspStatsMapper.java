@@ -2,6 +2,7 @@ package com.ai.oidd.pt.mapper;
 
 import com.ai.oidd.pt.entity.MdnSuspStats;
 import com.ai.oidd.pt.vo.CityCodeQty;
+import com.ai.oidd.pt.vo.CommonQty;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -32,13 +33,11 @@ public interface MdnSuspStatsMapper extends Mapper<MdnSuspStats> {
     /**
      * 识别源占比
      *
-     * @param sourceType
      * @param start
      * @param end
      * @return
      */
-    float sourceTypeRatioByDate(@Param("sourceType") String sourceType
-            , @Param("start") Integer start, @Param("end") Integer end);
+    List<CommonQty> countSourceTypeByDate(@Param("start") Integer start, @Param("end") Integer end);
 
     /**
      *  按日期计算总量

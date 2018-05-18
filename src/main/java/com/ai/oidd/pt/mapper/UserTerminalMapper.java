@@ -1,7 +1,7 @@
 package com.ai.oidd.pt.mapper;
 
 import com.ai.oidd.pt.entity.UserTerminal;
-import com.ai.oidd.pt.vo.CommonQty;
+import com.ai.oidd.pt.vo.CommonDateQty;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -15,7 +15,5 @@ import java.util.List;
  */
 public interface UserTerminalMapper extends Mapper<UserTerminal> {
 
-    UserTerminal queryUserTerminal(@Param("mdn") String mdn);
-
-    List<CommonQty> countTerQtyByDate(@Param("mdn") String mdn, @Param("start") Integer start, @Param("end") Integer end);
+    List<CommonDateQty> countTerQtyByDate(@Param("mdn") String mdn, @Param("start") Integer start, @Param("end") Integer end);
 }
