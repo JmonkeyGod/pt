@@ -39,6 +39,7 @@ public interface MdnSuspStatsMapper extends Mapper<MdnSuspStats> {
      */
     List<CommonQty> countSourceTypeByDate(@Param("start") Integer start, @Param("end") Integer end);
 
+
     /**
      *  按日期计算总量
      * @param start

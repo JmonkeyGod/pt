@@ -53,7 +53,7 @@
         </if>
     </select>
 
-
+   <!-- 识别源占比 按天统计-->
     <select id="countSourceTypeByDate" resultMap="commonQty">
         SELECT
         sourceType, COUNT(*) AS qty
@@ -68,6 +68,5 @@
         </if>
         GROUP BY sourceType;
     </select>
-
 
 </mapper>

@@ -7,6 +7,7 @@ import com.ai.oidd.pt.entity.MdnMonitor;
 import com.ai.oidd.pt.service.IMdnMonitorService;
 import com.ai.oidd.pt.vo.CityCodeQty;
 import com.ai.oidd.pt.vo.CommonDateQty;
+import com.ai.oidd.pt.vo.CommonRatioVo;
 import com.ai.oidd.pt.vo.MdnMonitorVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,7 +33,7 @@ public class MdnMonitorController extends BaseController<IMdnMonitorService, Mdn
     @ApiOperation("高危终端占比")
     @RequestMapping(value = "/trbd", method = RequestMethod.GET)
     @ResponseBody
-    public ObjectRestResponse<Float> terminalRatioByDate(
+    public ObjectRestResponse<CommonRatioVo> terminalRatioByDate(
             @ApiParam("开始日期") @RequestParam(required = false) Integer start
             , @ApiParam("结束日期") @RequestParam(required = false) Integer end) {
         return mdnMonitorBiz.terminalRatioByDate(start, end);
@@ -50,7 +51,7 @@ public class MdnMonitorController extends BaseController<IMdnMonitorService, Mdn
     @ApiOperation("高危号码占比")
     @RequestMapping(value = "/mrbd", method = RequestMethod.GET)
     @ResponseBody
-    public ObjectRestResponse<Float> mdnRatioByDate(
+    public ObjectRestResponse<CommonRatioVo> mdnRatioByDate(
             @ApiParam("开始日期") @RequestParam(required = false) Integer start
             , @ApiParam("结束日期") @RequestParam(required = false) Integer end) {
         return mdnMonitorBiz.mdnRatioByDate(start, end);

@@ -6,6 +6,7 @@ import com.ai.oidd.pt.entity.MdnMonitor;
 import com.ai.oidd.pt.mapper.MdnMonitorMapper;
 import com.ai.oidd.pt.vo.CityCodeQty;
 import com.ai.oidd.pt.vo.CommonDateQty;
+import com.ai.oidd.pt.vo.CommonRatioVo;
 import com.ai.oidd.pt.vo.MdnMonitorVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -33,9 +34,21 @@ public class MdnMonitorBiz extends BaseBiz<MdnMonitorMapper, MdnMonitor> {
      * @param end
      * @return
      */
-    public ObjectRestResponse<Float> terminalRatioByDate(Integer start, Integer end) {
-        ObjectRestResponse<Float> entityObjectRestResponse = new ObjectRestResponse<>();
-        entityObjectRestResponse.data(mapper.terminalRatioByDate(start, end));
+    public ObjectRestResponse<CommonRatioVo> terminalRatioByDate(Integer start, Integer end) {
+
+        int queryQtys = mapper.terminalRatioByDate(start, end);
+        int total = mapper.selectCountByExample(new Example(MdnMonitor.class));
+        float ratio = (float) queryQtys / total;
+
+        CommonRatioVo commonRatioVo = new CommonRatioVo();
+        commonRatioVo.setName("riskTerminal");
+        commonRatioVo.setQty(queryQtys);
+        commonRatioVo.setRatio(ratio);
+        commonRatioVo.setPercent(String.format("%.2f", ratio*100)+"%");
+
+
+        ObjectRestResponse<CommonRatioVo> entityObjectRestResponse = new ObjectRestResponse<>();
+        entityObjectRestResponse.data(commonRatioVo);
         return entityObjectRestResponse;
     }
 
@@ -58,9 +71,21 @@ public class MdnMonitorBiz extends BaseBiz<MdnMonitorMapper, MdnMonitor> {
      * @param end
      * @return
      */
-    public ObjectRestResponse<Float> mdnRatioByDate(Integer start, Integer end) {
-        ObjectRestResponse<Float> entityObjectRestResponse = new ObjectRestResponse<>();
-        entityObjectRestResponse.data(mapper.mdnRatioByDate(start, end));
+    public ObjectRestResponse<CommonRatioVo> mdnRatioByDate(Integer start, Integer end) {
+
+        int queryQtys = mapper.mdnRatioByDate(start, end);
+        int total = mapper.selectCountByExample(new Example(MdnMonitor.class));
+        float ratio = (float) queryQtys / total;
+
+        CommonRatioVo commonRatioVo = new CommonRatioVo();
+        commonRatioVo.setName("riskMdn");
+        commonRatioVo.setQty(queryQtys);
+        commonRatioVo.setRatio(ratio);
+        commonRatioVo.setPercent(String.format("%.2f", ratio*100)+"%");
+
+
+        ObjectRestResponse<CommonRatioVo> entityObjectRestResponse = new ObjectRestResponse<>();
+        entityObjectRestResponse.data(commonRatioVo);
         return entityObjectRestResponse;
     }
 
@@ -159,7 +184,7 @@ public class MdnMonitorBiz extends BaseBiz<MdnMonitorMapper, MdnMonitor> {
         if (isCriteria) {
             list = mapper.selectByExample(example);
             System.out.println(list.size());
-        }else {
+        } else {
             list = mapper.selectByExample(new Example(MdnMonitor.class));
         }
 

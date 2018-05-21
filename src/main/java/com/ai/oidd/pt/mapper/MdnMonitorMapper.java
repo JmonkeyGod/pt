@@ -22,7 +22,7 @@ public interface MdnMonitorMapper extends Mapper<MdnMonitor> {
      * @param end
      * @return
      */
-    float terminalRatioByDate(@Param("start") Integer start, @Param("end") Integer end);
+    int terminalRatioByDate(@Param("start") Integer start, @Param("end") Integer end);
 
     /**
      *  高危终端按天
@@ -38,7 +38,7 @@ public interface MdnMonitorMapper extends Mapper<MdnMonitor> {
      * @param end
      * @return
      */
-    float mdnRatioByDate(@Param("start") Integer start, @Param("end") Integer end);
+    int mdnRatioByDate(@Param("start") Integer start, @Param("end") Integer end);
 
     /**
      *  高危号码按天

@@ -14,10 +14,11 @@
 
 
     <!-- 1、高危终端占比 -->
-    <select id="terminalRatioByDate" resultType="float">
+    <select id="terminalRatioByDate" resultType="java.lang.Integer">
         SELECT
-        FORMAT(
-        (SELECT COUNT(terminalType) FROM t_mdn_monitor
+        COUNT(terminalType) AS qty
+        FROM
+        t_mdn_monitor
         WHERE 1 = 1
         <if test="null != start and ''!= start and 0 != start">
             AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
@@ -25,10 +26,6 @@
         <if test="null != end and ''!= end and 0 != end">
             AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ <= ]]> #{end}
         </if>
-        ) /
-        (SELECT COUNT(terminalType) FROM t_mdn_monitor)
-        ,2) AS ratio
-        FROM DUAL
     </select>
 
     <!-- 1-1 高危终端按天 -->
@@ -46,10 +43,11 @@
     </select>
 
     <!-- 2、高危号码占比 -->
-    <select id="mdnRatioByDate" resultType="float">
+    <select id="mdnRatioByDate" resultType="java.lang.Integer">
         SELECT
-        FORMAT(
-        (SELECT COUNT(mdn) FROM t_mdn_monitor
+        COUNT(mdn) AS qty
+        FROM
+        t_mdn_monitor
         WHERE 1 = 1
         <if test="null != start and ''!= start and 0 != start">
             AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
@@ -57,10 +55,6 @@
         <if test="null != end and ''!= end and 0 != end">
             AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ <= ]]> #{end}
         </if>
-        ) /
-        (SELECT COUNT(mdn) FROM t_mdn_monitor)
-        ,2) AS ratio
-        FROM DUAL
     </select>
 
     <!-- 2-1 高危号码按天 -->
