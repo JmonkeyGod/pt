@@ -29,6 +29,20 @@ public class BaseController<Base extends BaseService, Entity> {
         return new ObjectRestResponse<>();
     }
 
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public ObjectRestResponse<Entity> update(@RequestBody Entity entity) {
+        base.update(entity);
+        return new ObjectRestResponse<>();
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    @ResponseBody
+    public ObjectRestResponse<Entity> delete(@RequestParam("ids[]") Integer[] ids) {
+        base.deleteBatchByIds(ids);
+        return new ObjectRestResponse<>();
+    }
+
     @RequestMapping(value = "/all",method = RequestMethod.GET)
     @ResponseBody
     public List<Entity> all(){

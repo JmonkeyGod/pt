@@ -80,7 +80,19 @@ public class BaseServiceImpl<M extends Mapper<T>, T> implements BaseService<T> {
         mapper.insertSelective(entity);
     }
 
-//    @Override
+    @Override
+    public void update(T entity) {
+        mapper.updateByPrimaryKeySelective(entity);
+    }
+
+    @Override
+    public void deleteBatchByIds(Object[] ids) {
+        for (Object id: ids) {
+            mapper.deleteByPrimaryKey(id);
+        }
+    }
+
+    //    @Override
 //    public void deleteBatchByIds(List<Object> ids) {
 //        mapper.batchDeleteByIds(ids);
 //    }

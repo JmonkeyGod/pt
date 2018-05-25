@@ -92,6 +92,8 @@ public interface BaseService<T> {
      */
     void insertSelective(T entity);
 
+    void update(T entity);
+
     /**
      * 删除
      *
@@ -127,7 +129,7 @@ public interface BaseService<T> {
      *
      * @param ids
      */
-//    void deleteBatchByIds(List<Object> ids);
+    void deleteBatchByIds(Object[] ids);
 
 
     /**
