@@ -31,10 +31,10 @@
         FROM t_user_affected
         WHERE 1=1
         <if test="null != start and ''!= start and 0 != start">
-            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
         </if>
         <if test="null != end and ''!= end and 0 != end">
-            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
+            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
         </if>
 
     </select>
@@ -48,10 +48,10 @@
         t_user_affected
         WHERE 1 = 1
         <if test="null != start and ''!= start and 0 != start">
-            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
         </if>
         <if test="null != end and ''!= end and 0 != end">
-            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
+            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
         </if>
         GROUP BY sourceId
         ORDER BY qtys DESC
@@ -64,10 +64,10 @@
         FROM t_user_affected
         WHERE 1 = 1
         <if test="null != start and ''!= start and 0 != start">
-            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
         </if>
         <if test="null != end and ''!= end and 0 != end">
-            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
+            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
         </if>
         group by type
     </select>
@@ -77,10 +77,10 @@
         FROM t_user_affected
         WHERE 1 = 1
         <if test="null != start and ''!= start and 0 != start">
-            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
         </if>
         <if test="null != end and ''!= end and 0 != end">
-            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
+            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
         </if>
         GROUP BY mdn
         ORDER BY qty DESC
@@ -94,10 +94,10 @@
         FROM t_user_affected
         WHERE 1 = 1
         <if test="null != start and ''!= start and 0 != start">
-            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
         </if>
         <if test="null != end and ''!= end and 0 != end">
-            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
+            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
         </if>
         GROUP BY TIME;
     </select>
