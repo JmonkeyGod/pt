@@ -2,25 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.oidd.pt.mapper.MdnAbnMonitorMapper">
 
-    <resultMap id="mdnAbnCityCountMap" type="com.ai.oidd.pt.entity.MdnAbnCityCount">
+    <resultMap id="mdnAbnCityCountMap" type="com.ai.oidd.pt.vo.MdnAbnCityCount">
         <id column="code" jdbcType="VARCHAR" property="code"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="total" jdbcType="INTEGER" property="total"/>
     </resultMap>
 
-    <resultMap id="mdnAbnTypeCountMap" type="com.ai.oidd.pt.entity.MdnAbnTypeCount">
+    <resultMap id="mdnAbnTypeCountMap" type="com.ai.oidd.pt.vo.MdnAbnTypeCount">
         <id column="type" jdbcType="VARCHAR" property="type"/>
         <result column="total" jdbcType="INTEGER" property="total"/>
     </resultMap>
 
 
-    <resultMap id="mdnAbnTypeCountMapByDay" type="com.ai.oidd.pt.entity.MdnAbnTypeCountByDay">
+    <resultMap id="mdnAbnTypeCountMapByDay" type="com.ai.oidd.pt.vo.MdnAbnTypeCountByDay">
         <id column="date" jdbcType="INTEGER" property="date"/>
         <result column="type" jdbcType="VARCHAR" property="type"/>
         <result column="total" jdbcType="INTEGER" property="total"/>
     </resultMap>
 
-    <resultMap id="mdnAbnTypeTopMapByDay" type="com.ai.oidd.pt.entity.MdnAbnTypeTop">
+    <resultMap id="mdnAbnTypeTopMapByDay" type="com.ai.oidd.pt.vo.MdnAbnTypeTop">
         <id column="mdn" jdbcType="VARCHAR" property="mdn"/>
         <result column="total" jdbcType="INTEGER" property="total"/>
     </resultMap>

@@ -1,4 +1,4 @@
-package com.ai.oidd.pt.entity;
+package com.ai.oidd.pt.vo;
 
 import lombok.Data;
 
@@ -11,7 +11,8 @@ import java.io.Serializable;
  * @date 2018-04-27
  */
 @Data
-public class MdnAbnTypeCount implements Serializable {
+public class MdnAbnTypeCountByDay implements Serializable {
+    private int date;
     /**
      * type
      */

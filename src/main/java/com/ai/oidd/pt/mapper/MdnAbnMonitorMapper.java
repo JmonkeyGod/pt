@@ -1,8 +1,7 @@
 package com.ai.oidd.pt.mapper;
 
 import com.ai.oidd.pt.entity.*;
-import com.ai.oidd.pt.vo.CityCodeQty;
-import com.ai.oidd.pt.vo.CommonDateQty;
+import com.ai.oidd.pt.vo.*;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -56,7 +55,7 @@ public interface MdnAbnMonitorMapper extends Mapper<MdnAbnBehavor> {
      * @param end
      * @return
      */
-    List<MdnAbnTypeTop> typeTopByDate(@Param("start") Integer start, @Param("end") Integer end, @Param("procode") String procode,  @Param("type") String type);
+    List<MdnAbnTypeTop> typeTopByDate(@Param("start") Integer start, @Param("end") Integer end, @Param("procode") String procode, @Param("type") String type);
 
 
 

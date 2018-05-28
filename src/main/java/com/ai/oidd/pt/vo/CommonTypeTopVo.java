@@ -1,6 +1,5 @@
 package com.ai.oidd.pt.vo;
 
-import com.ai.oidd.pt.entity.MdnAbnTypeTop;
 import lombok.Data;
 
 import java.io.Serializable;
