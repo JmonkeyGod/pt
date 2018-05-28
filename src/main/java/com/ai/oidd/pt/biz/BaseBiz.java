@@ -1,6 +1,8 @@
 package com.ai.oidd.pt.biz;
 
+import com.ai.oidd.pt.common.msg.ObjectRestResponse;
 import com.ai.oidd.pt.common.util.EntityUtils;
+import com.ai.oidd.pt.vo.CommonTypeTopVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -67,8 +69,6 @@ public abstract class BaseBiz<M extends Mapper<T>, T> {
     public int selectCountByExample(Object example) {
         return mapper.selectCountByExample(example);
     }
-
-
 
 }
 

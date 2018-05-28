@@ -19,17 +19,19 @@ public class MdnAbnBehavor implements Serializable {
     /**
      * 疑似号码
      */
+    @Column(name ="mdn")
     private String mdn;
 
     /**
      * 归属地
      */
-    @Column(name ="baseId")
-    private String baseId;
+    @Column(name ="hcode")
+    private String hcode;
 
     /**
      * 异常类型
      */
+    @Column(name ="type")
     private String type;
 
     /**
@@ -41,22 +43,19 @@ public class MdnAbnBehavor implements Serializable {
     /**
      * 处理状态
      */
+    @Column(name ="status")
     private int status;
 
     /**
      *  发生时间
      */
-    @Column(name ="startTime")
-    private Date startTime;
+    @Column(name ="starttime")
+    private Date starttime;
 
     /**
-     *  报案时间
+     *  结束时间
      */
-    @Column(name ="caseTime")
-    private Date caseTime;
+    @Column(name ="lasttime")
+    private Date lasttime;
 
-    /**
-     *  操作
-     */
-    private String operation;
 }
