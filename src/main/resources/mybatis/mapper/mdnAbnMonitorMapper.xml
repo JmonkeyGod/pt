@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.oidd.pt.mapper.MdnAbnMonitorMapper">
+
+    <resultMap id="mdnAbnCityCountMap" type="com.ai.oidd.pt.entity.MdnAbnCityCount">
+        <id column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="total" jdbcType="INTEGER" property="total"/>
+    </resultMap>
+
+    <resultMap id="mdnAbnTypeCountMap" type="com.ai.oidd.pt.entity.MdnAbnTypeCount">
+        <id column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="total" jdbcType="INTEGER" property="total"/>
+    </resultMap>
+
+
+    <resultMap id="mdnAbnTypeCountMapByDay" type="com.ai.oidd.pt.entity.MdnAbnTypeCountByDay">
+        <id column="date" jdbcType="INTEGER" property="date"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="total" jdbcType="INTEGER" property="total"/>
+    </resultMap>
+
+    <resultMap id="mdnAbnTypeTopMapByDay" type="com.ai.oidd.pt.entity.MdnAbnTypeTop">
+        <id column="mdn" jdbcType="VARCHAR" property="mdn"/>
+        <result column="total" jdbcType="INTEGER" property="total"/>
+    </resultMap>
+
+
+    <!-- 1、异常行为省份占比 -->
+    <select id="provinceRatioByDate" resultMap="mdnAbnCityCountMap" >
+        SELECT m.province_code code ,m.province_name name,  SUM(m.total) total from
+        (SELECT t.*,p.province_code,p.province_name FROM
+        (SELECT hcode,SUM(counts) total FROM t_mdn_abn_behavor
+        WHERE 1 = 1
+        <if test="null != start and ''!= start and 0 != start">
+            AND CAST(DATE_FORMAT(`lasttime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+            AND CAST(DATE_FORMAT(`lasttime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ <= ]]> #{end}
+        </if>
+        GROUP BY hcode) t LEFT JOIN t_province_area_code p on t.hcode = p.area_code) m
+        GROUP BY m.province_code
+    </select>
+
+
+
+    <!-- 1、异常行为省份占比 -->
+    <select id="provinceTopByDate" resultMap="mdnAbnCityCountMap">
+        SELECT t.hcode code ,SUM(t.counts) total, p.area_code_desc name FROM t_mdn_abn_behavor t
+        LEFT JOIN  t_province_area_code p on t.hcode = p.area_code
+        WHERE 1=1
+        <if test="null != start and ''!= start and 0 != start">
+            AND CAST(DATE_FORMAT(`lasttime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+            AND CAST(DATE_FORMAT(`lasttime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ <= ]]> #{end}
+        </if>
+        <if test="null != procode and ''!= procode ">
+            AND p.province_code = #{procode}
+        </if>
+        GROUP BY t.hcode ORDER BY total DESC
+    </select>
+
+
+    <!-- 1、异常行为类型本省占比 -->
+    <select id="typeRatioByDate" resultMap="mdnAbnTypeCountMap" >
+        SELECT t.type,SUM(t.counts) total FROM t_mdn_abn_behavor t
+        LEFT JOIN  t_province_area_code p on t.hcode = p.area_code
+        WHERE 1=1
+        <if test="null != start and ''!= start and 0 != start">
+            AND CAST(DATE_FORMAT(`lasttime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+            AND CAST(DATE_FORMAT(`lasttime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ <= ]]> #{end}
+        </if>
+        <if test="null != procode and ''!= procode ">
+            AND p.province_code = #{procode}
+        </if>
+        GROUP BY t.type ORDER BY total DESC
+    </select>
+
+
+    <!-- 1、异常行为本省按天统计 -->
+    <select id="typeStaByDate" resultMap="mdnAbnTypeCountMapByDay">
+        SELECT m.date,m.type,SUM(m.counts) total FROM
+           (SELECT CAST(DATE_FORMAT(`lasttime`, '%Y%m%d') AS SIGNED INTEGER) date ,t.type, t.counts FROM t_mdn_abn_behavor t
+             LEFT JOIN t_province_area_code p on t.hcode = p.area_code
+             WHERE 1=1
+             <if test="null != start and ''!= start and 0 != start">
+                 AND CAST(DATE_FORMAT(`lasttime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+             </if>
+             <if test="null != end and ''!= end and 0 != end">
+                 AND CAST(DATE_FORMAT(`lasttime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ <= ]]> #{end}
+             </if>
+             <if test="null != procode and ''!= procode ">
+                AND p.province_code = #{procode}
+             </if>
+           ) m
+       GROUP BY m.date,m.type
+       ORDER BY m.date
+    </select>
+
+
+
+    <!-- 1、异常行为本省按天统计 -->
+    <select id="typeTopByDate" resultMap="mdnAbnTypeTopMapByDay">
+        SELECT m.mdn,SUM(m.counts) total FROM
+        (SELECT t.mdn , t.counts FROM t_mdn_abn_behavor t
+        LEFT JOIN t_province_area_code p on t.hcode = p.area_code
+        WHERE 1=1
+        <if test="null != start and ''!= start and 0 != start">
+            AND CAST(DATE_FORMAT(`lasttime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+            AND CAST(DATE_FORMAT(`lasttime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ <= ]]> #{end}
+        </if>
+        <if test="null != procode and ''!= procode ">
+            AND p.province_code = #{procode}
+        </if>
+        <if test="null != type and ''!= type ">
+            AND t.type = #{type}
+        </if>
+        ) m
+        GROUP BY m.mdn
+        ORDER BY total DESC
+        LIMIT 0,5
+    </select>
+
+
+</mapper>
