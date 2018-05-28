@@ -3,6 +3,7 @@ package com.ai.oidd.pt.vo;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Asiainfo-OIDD
@@ -11,8 +12,7 @@ import java.io.Serializable;
  * @date 2018-05-28
  */
 @Data
-public class MdnQty implements Serializable {
-
-    private String mdn;
+public class DateQty implements Serializable {
+    private Date time;
     private int qty;
 }

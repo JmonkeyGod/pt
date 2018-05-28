@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * Asiainfo-OIDD
- * 受害用户统计
+ * 受害用户统计 bean
  * @author sunbin-71738
  * @date 2018-05-28
  */

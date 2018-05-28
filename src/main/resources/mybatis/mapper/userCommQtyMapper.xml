@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.oidd.pt.mapper.UserCommQtyMapper">
 
-    <resultMap id="mdnQty" type="com.ai.oidd.pt.vo.MdnQty">
+    <resultMap id="mdnQty" type="com.ai.oidd.pt.vo.MdnDateQty">
         <id column="date" jdbcType="INTEGER" property="date"/>
         <result column="cms" jdbcType="INTEGER" property="cms"/>
         <result column="sms" jdbcType="INTEGER" property="sms"/>

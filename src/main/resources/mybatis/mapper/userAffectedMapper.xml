@@ -2,7 +2,103 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.oidd.pt.mapper.UserAffectedMapper">
 
+    <resultMap id="cityCodeQty" type="com.ai.oidd.pt.vo.CityCodeQty">
+        <id column="sourceId" jdbcType="VARCHAR" property="cityCode"/>
+        <result column="qty" jdbcType="INTEGER" property="qty"/>
+    </resultMap>
+
+
+    <resultMap id="commonQty" type="com.ai.oidd.pt.vo.CommonQty">
+        <id column="type" jdbcType="INTEGER" property="name"/>
+        <result column="qty" jdbcType="INTEGER" property="qty"/>
+    </resultMap>
+
+    <resultMap id="mdnQty" type="com.ai.oidd.pt.vo.MdnQty">
+        <id column="mdn" jdbcType="INTEGER" property="mdn"/>
+        <result column="qty" jdbcType="INTEGER" property="qty"/>
+    </resultMap>
+
+    <resultMap id="dateQty" type="com.ai.oidd.pt.vo.DateQty">
+        <id column="time" jdbcType="INTEGER" property="time"/>
+        <result column="qty" jdbcType="INTEGER" property="qty"/>
+    </resultMap>
 
 
 
+    <select id="countAffectedByDate" resultType="java.lang.Integer">
+
+        SELECT  COUNT(DISTINCT fraudedMdn) AS qty
+        FROM t_user_affected
+        WHERE 1=1
+        <if test="null != start and ''!= start and 0 != start">
+            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
+        </if>
+
+    </select>
+
+
+    <select id="countAffectedByAreaAndDate" resultMap="cityCodeQty">
+        SELECT
+        sourceId,
+        COUNT(sourceId) AS qty
+        FROM
+        t_user_affected
+        WHERE 1 = 1
+        <if test="null != start and ''!= start and 0 != start">
+            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
+        </if>
+        GROUP BY sourceId
+        ORDER BY qtys DESC
+    </select>
+
+
+    <select id="countTypeByDate" resultMap="commonQty">
+        SELECT
+        type,COUNT(*) AS qty
+        FROM t_user_affected
+        WHERE 1 = 1
+        <if test="null != start and ''!= start and 0 != start">
+            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
+        </if>
+        group by type
+    </select>
+
+    <select id="countCallTimesByDate" resultMap="mdnQty">
+        SELECT mdn,COUNT(*) AS qty
+        FROM t_user_affected
+        WHERE 1 = 1
+        <if test="null != start and ''!= start and 0 != start">
+            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
+        </if>
+        GROUP BY mdn
+        ORDER BY qty DESC
+        LIMIT 5;
+
+    </select>
+
+    <select id="countAffectedByTimestamp" resultMap="dateQty">
+        SELECT TIME,
+        COUNT(fraudedMdn) AS qty
+        FROM t_user_affected
+        WHERE 1 = 1
+        <if test="null != start and ''!= start and 0 != start">
+            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+        </if>
+        <if test="null != end and ''!= end and 0 != end">
+            AND CAST(DATE_FORMAT(et.`updateTime`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
+        </if>
+        GROUP BY TIME;
+    </select>
 </mapper>
