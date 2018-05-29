@@ -98,6 +98,11 @@ public class UserAffectedBiz extends BaseBiz<UserAffectedMapper, UserAffected> {
                 isCriteria = true;
                 criteria.andEqualTo("mdn", mdn);
             }
+            String fraudedMdn = vo.getFraudedMdn();
+            if (StringUtils.isNotEmpty(fraudedMdn)) {
+                isCriteria = true;
+                criteria.andEqualTo("fraudedMdn", fraudedMdn);
+            }
 
             String sourceId = vo.getSourceId();
             if (StringUtils.isNotEmpty(sourceId)) {

@@ -33,6 +33,8 @@ public class UserAffectedVo extends Query implements Serializable {
      */
     private String mdn;
 
+    private String fraudedMdn;
+
     /**
      * 来源地
      */
