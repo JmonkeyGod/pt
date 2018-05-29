@@ -7,7 +7,8 @@ import com.ai.oidd.pt.entity.TerminalSuspStats;
 import com.ai.oidd.pt.service.ITerminalSuspStatsService;
 import com.ai.oidd.pt.vo.CityCodeQty;
 import com.ai.oidd.pt.vo.CommonQty;
-import com.ai.oidd.pt.vo.MdnSuspStatsVo;
+import com.ai.oidd.pt.vo.TerminalSuspStatsHistoryVo;
+import com.ai.oidd.pt.vo.TerminalSuspStatsVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -70,7 +71,16 @@ public class TerminalSuspStatsController extends BaseController<ITerminalSuspSta
     @RequestMapping(value = "/qbeap", method = RequestMethod.POST)
     @ResponseBody
     public TableResultResponse<TerminalSuspStats> queryByExampleAndPage(
-            @ApiParam("查询对象") @RequestBody MdnSuspStatsVo mdnSuspStatsVo) {
-        return biz.queryByExampleAndPage(mdnSuspStatsVo);
+            @ApiParam("查询对象") @RequestBody TerminalSuspStatsVo terminalSuspStatsVo) {
+        return biz.queryByExampleAndPage(terminalSuspStatsVo);
+    }
+
+
+    @ApiOperation("终端历史")
+    @RequestMapping(value = "/qhbeap", method = RequestMethod.POST)
+    @ResponseBody
+    public TableResultResponse<TerminalSuspStats> queryHistoryByExampleAndPage(
+            @ApiParam("查询对象") @RequestBody TerminalSuspStatsHistoryVo terminalSuspStatsHistoryVo) {
+        return biz.queryHistoryByExampleAndPage(terminalSuspStatsHistoryVo);
     }
 }
