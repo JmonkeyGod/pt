@@ -4,7 +4,6 @@ import com.ai.oidd.pt.biz.UserAffectedReplayBiz;
 import com.ai.oidd.pt.common.msg.TableResultResponse;
 import com.ai.oidd.pt.entity.UserAffectedReplay;
 import com.ai.oidd.pt.service.IUserAffectedReplayService;
-import com.ai.oidd.pt.vo.CommonQty;
 import com.ai.oidd.pt.vo.MdnQty;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,10 +43,9 @@ public class UserAffectedReplayController extends BaseController<IUserAffectedRe
     @ApiOperation("诈骗回放")
     @RequestMapping(value = "/count/cmtbd", method = RequestMethod.GET)
     @ResponseBody
-    public TableResultResponse<CommonQty> countMdnTypeByDate(@RequestParam String mdn
-            ,@ApiParam("开始日期")  @RequestParam(required = false) Integer start
-            ,@ApiParam("结束日期")  @RequestParam(required = false) Integer end) {
-        List<CommonQty> commonQties = userAffectedReplayBiz.countMdnTypeByDate(mdn,start, end);
+    public TableResultResponse<UserAffectedReplay> countMdnTypeByDate(@RequestParam String mdn
+           ) {
+        List<UserAffectedReplay> commonQties = userAffectedReplayBiz.countMdnTypeByDate(mdn);
         return new TableResultResponse<>(commonQties.size(), commonQties);
     }
 

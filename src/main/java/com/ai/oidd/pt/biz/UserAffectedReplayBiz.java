@@ -2,10 +2,11 @@ package com.ai.oidd.pt.biz;
 
 import com.ai.oidd.pt.entity.UserAffectedReplay;
 import com.ai.oidd.pt.mapper.UserAffectedReplayMapper;
-import com.ai.oidd.pt.vo.CommonQty;
 import com.ai.oidd.pt.vo.MdnQty;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -34,13 +35,26 @@ public class UserAffectedReplayBiz extends BaseBiz<UserAffectedReplayMapper, Use
     /**
      * 诈骗回放
      *
-     * @param start 开始时间
-     * @param end   结束时间
      * @return top5
      */
-    public List<CommonQty> countMdnTypeByDate(@Param("mdn") String mdn, @Param("start") Integer start
-            , @Param("end") Integer end) {
-        return mapper.countMdnTypeByDate(mdn, start, end);
+    public List<UserAffectedReplay> countMdnTypeByDate(@Param("mdn") String mdn) {
+        Example example = new Example(UserAffectedReplay.class);
+        Example.Criteria criteria = example.createCriteria();
+
+        boolean isCriteria = false;
+        if (StringUtils.isNotEmpty(mdn)) {
+            isCriteria = true;
+            criteria.andEqualTo("mdn", mdn);
+        }
+
+        List<UserAffectedReplay> list;
+        if (isCriteria) {
+            list = mapper.selectByExample(example);
+        } else {
+            list = mapper.selectByExample(new Example(UserAffectedReplay.class));
+        }
+
+        return list;
     }
 
 }
