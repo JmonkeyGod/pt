@@ -5,19 +5,13 @@ import com.ai.oidd.pt.common.msg.ObjectRestResponse;
 import com.ai.oidd.pt.common.msg.TableResultResponse;
 import com.ai.oidd.pt.entity.UserAffected;
 import com.ai.oidd.pt.service.IUserAffectedService;
-import com.ai.oidd.pt.vo.CityCodeQty;
-import com.ai.oidd.pt.vo.CommonQty;
-import com.ai.oidd.pt.vo.DateQty;
-import com.ai.oidd.pt.vo.MdnQty;
+import com.ai.oidd.pt.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -83,6 +77,14 @@ public class UserAffectedController extends BaseController<IUserAffectedService,
             , @RequestParam(required = false) Integer end) {
         List<DateQty> dateQties = userAffectedBiz.countAffectedByTimestamp(start, end);
         return new TableResultResponse<>(dateQties.size(), dateQties);
+    }
+
+    @ApiOperation("疑似终端统计复杂查询")
+    @RequestMapping(value = "/qbeap", method = RequestMethod.POST)
+    @ResponseBody
+    public TableResultResponse<UserAffected> queryByExampleAndPage(
+            @ApiParam("查询对象") @RequestBody UserAffectedVo userAffectedVo) {
+        return userAffectedBiz.queryByExampleAndPage(userAffectedVo);
     }
 
 }

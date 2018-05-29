@@ -43,7 +43,7 @@
     <select id="countAffectedByAreaAndDate" resultMap="cityCodeQty">
         SELECT
         sourceId,
-        COUNT(sourceId) AS qty
+        COUNT(DISTINCT fraudedMdn) AS qty
         FROM
         t_user_affected
         WHERE 1 = 1
