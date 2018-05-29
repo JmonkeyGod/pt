@@ -54,7 +54,7 @@
             AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
         </if>
         GROUP BY sourceId
-        ORDER BY qtys DESC
+        ORDER BY qty DESC
     </select>
 
 

@@ -41,7 +41,7 @@ public class UserAffectedReplayController extends BaseController<IUserAffectedRe
         return new TableResultResponse<>(mdnQties.size(), mdnQties);
     }
 
-    @ApiOperation("受害类型占比")
+    @ApiOperation("诈骗回放")
     @RequestMapping(value = "/count/cmtbd", method = RequestMethod.GET)
     @ResponseBody
     public TableResultResponse<CommonQty> countMdnTypeByDate(@RequestParam String mdn
