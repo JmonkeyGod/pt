@@ -58,7 +58,7 @@ public class ReportCase {
     /**
      * 是否被骗：是
      */
-    private boolean result;
+    private String result;
 
     /**
      * 主叫/被叫：主叫

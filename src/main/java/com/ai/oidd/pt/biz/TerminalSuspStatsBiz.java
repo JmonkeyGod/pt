@@ -2,58 +2,43 @@ package com.ai.oidd.pt.biz;
 
 import com.ai.oidd.pt.common.msg.ObjectRestResponse;
 import com.ai.oidd.pt.common.msg.TableResultResponse;
-import com.ai.oidd.pt.entity.MdnSuspStats;
-import com.ai.oidd.pt.mapper.MdnSuspStatsMapper;
+import com.ai.oidd.pt.entity.TerminalSuspStats;
+import com.ai.oidd.pt.mapper.TerminalSuspStatsMapper;
 import com.ai.oidd.pt.vo.CityCodeQty;
 import com.ai.oidd.pt.vo.CommonQty;
 import com.ai.oidd.pt.vo.MdnSuspStatsVo;
-import com.ai.oidd.pt.vo.SourceTypeVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Asiainfo-OIDD
- * 疑似号码统计 biz
+ * 疑似终端统计 biz
  *
- * @author sunbin-71738
- * @date 2018-05-17
+ * @author xieyy-66676
+ * @date 2018-05-25
  */
 @Service
-public class MdnSuspStatsBiz extends BaseBiz<MdnSuspStatsMapper, MdnSuspStats> {
+public class TerminalSuspStatsBiz extends BaseBiz<TerminalSuspStatsMapper, TerminalSuspStats> {
 
 
     /**
-     * 识别源占比
+     * 终端分布
      *
      * @param start
      * @param end
      * @return
      */
-    public TableResultResponse<SourceTypeVo> sourceTypeRatioByDate(Integer start, Integer end) {
+    public TableResultResponse<CommonQty> countTerminalTypeByDate(Integer start, Integer end) {
 
-        List<CommonQty> qtys = mapper.countSourceTypeByDate(start, end);
-        int total = mapper.selectCountByExample(new Example(MdnSuspStats.class));
+        List<CommonQty> qtys = mapper.countTerminalTypeByDate(start, end);
 
-        List<SourceTypeVo> sourceTypeVos = new ArrayList<>();
-        SourceTypeVo vo;
-        float ratio;
-        for (CommonQty commonQty : qtys) {
-            vo = new SourceTypeVo();
-            vo.setSourceName(commonQty.getName());
-            vo.setCounts(commonQty.getQty());
-            ratio = (float) commonQty.getQty()/ total;
-            vo.setRatio(ratio);
-            sourceTypeVos.add(vo);
-        }
-
-        return new TableResultResponse<>(sourceTypeVos.size(), sourceTypeVos);
+        return new TableResultResponse<>(qtys.size(), qtys);
     }
 
     /**
@@ -88,8 +73,8 @@ public class MdnSuspStatsBiz extends BaseBiz<MdnSuspStatsMapper, MdnSuspStats> {
      * @param vo
      * @return
      */
-    public TableResultResponse<MdnSuspStats> queryByExampleAndPage(MdnSuspStatsVo vo) {
-        Example example = new Example(MdnSuspStats.class);
+    public TableResultResponse<TerminalSuspStats> queryByExampleAndPage(MdnSuspStatsVo vo) {
+        Example example = new Example(TerminalSuspStats.class);
         Example.Criteria criteria = example.createCriteria();
         boolean isCriteria = false;
         int page = 1;
@@ -145,11 +130,11 @@ public class MdnSuspStatsBiz extends BaseBiz<MdnSuspStatsMapper, MdnSuspStats> {
 
         Page<Object> result = PageHelper.startPage(page, limit);
 
-        List<MdnSuspStats> list;
+        List<TerminalSuspStats> list;
         if (isCriteria) {
             list = mapper.selectByExample(example);
         }else {
-            list = mapper.selectByExample(new Example(MdnSuspStats.class));
+            list = mapper.selectByExample(new Example(TerminalSuspStats.class));
         }
 
         return new TableResultResponse<>(result.getTotal(), list);
@@ -162,9 +147,9 @@ public class MdnSuspStatsBiz extends BaseBiz<MdnSuspStatsMapper, MdnSuspStats> {
      * @param end
      * @return
      */
-    public ObjectRestResponse<Integer> countMdnByDate(Integer start, Integer end) {
+    public ObjectRestResponse<Integer> countTerminalByDate(Integer start, Integer end) {
         ObjectRestResponse<Integer> entityObjectRestResponse = new ObjectRestResponse<>();
-        entityObjectRestResponse.data(mapper.countMdnByDate(start, end));
+        entityObjectRestResponse.data(mapper.countTerminalByDate(start, end));
         return entityObjectRestResponse;
     }
 
