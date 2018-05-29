@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.oidd.pt.mapper.TerminalSuspStatsMapper">
     <resultMap id="commonQty" type="com.ai.oidd.pt.vo.CommonQty">
-        <id column="sourceType" jdbcType="INTEGER" property="name"/>
+        <id column="terminalType" jdbcType="INTEGER" property="name"/>
         <result column="qty" jdbcType="INTEGER" property="qty"/>
     </resultMap>
 
@@ -59,7 +59,80 @@
         <if test="null != end and ''!= end and 0 != end">
         AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
         </if>
-        GROUP BY sourceType;
+        GROUP BY terminalType ORDER BY qty DESC;
     </select>
 
+    <select id="countTerminalImei" parameterType="com.ai.oidd.pt.vo.TerminalSuspStatsVo" resultType="com.ai.oidd.pt.vo.TerminalCount">
+        SELECT imei, COUNT(*) AS total FROM t_terminal_suspstats
+        WHERE 1 = 1
+        <if test="null != vo.imei and ''!= vo.imei">
+            AND imei = #{vo.imei}
+        </if>
+        <if test="null != vo.terminalType and ''!= vo.terminalType">
+            AND terminalType = #{vo.terminalType}
+        </if>
+        <if test="null != vo.sourceArea and ''!= vo.sourceArea">
+            AND sourceArea = #{vo.sourceArea}
+        </if>
+        <if test="null != vo.startTime and ''!= vo.startTime">
+            AND time <![CDATA[ >= ]]> #{vo.start}
+        </if>
+        <if test="null != vo.endTime and ''!= vo.endTime">
+            AND time <![CDATA[ <= ]]> #{vo.end}
+        </if>
+        <if test="null != vo.activeDateStart and ''!= vo.activeDateStart">
+            AND activeDate <![CDATA[ >= ]]> #{vo.activeDateStart}
+        </if>
+        <if test="null != vo.activeDateEnd and ''!= vo.activeDateEnd">
+            AND activeDate <![CDATA[ <= ]]> #{vo.activeDateEnd}
+        </if>
+        group by imei
+    </select>
+
+    <select id="queryMinTime" resultType="com.ai.oidd.pt.entity.TerminalSuspStats">
+        SELECT * FROM t_terminal_suspstats
+        WHERE time = (
+        select min(time) FROM t_terminal_suspstats WHERE imei = #{imei}
+        <if test="null != vo.terminalType and ''!= vo.terminalType">
+            AND terminalType = #{vo.terminalType}
+        </if>
+        <if test="null != vo.sourceArea and ''!= vo.sourceArea">
+            AND sourceArea = #{vo.sourceArea}
+        </if>
+        <if test="null != vo.startTime and ''!= vo.startTime">
+            AND time <![CDATA[ >= ]]> #{vo.start}
+        </if>
+        <if test="null != vo.endTime and ''!= vo.endTime">
+            AND time <![CDATA[ <= ]]> #{vo.end}
+        </if>
+        <if test="null != vo.activeDateStart and ''!= vo.activeDateStart">
+            AND activeDate <![CDATA[ >= ]]> #{vo.activeDateStart}
+        </if>
+        <if test="null != vo.activeDateEnd and ''!= vo.activeDateEnd">
+            AND activeDate <![CDATA[ <= ]]> #{vo.activeDateEnd}
+        </if>
+        )
+    </select>
+
+    <select id="queryMaxActiveTime" resultType="com.ai.oidd.pt.entity.TerminalSuspStats">
+        select max(activeDate) AS activeDate FROM t_terminal_suspstats WHERE imei = #{imei}
+        <if test="null != vo.terminalType and ''!= vo.terminalType">
+            AND terminalType = #{vo.terminalType}
+        </if>
+        <if test="null != vo.sourceArea and ''!= vo.sourceArea">
+            AND sourceArea = #{vo.sourceArea}
+        </if>
+        <if test="null != vo.startTime and ''!= vo.startTime">
+            AND time <![CDATA[ >= ]]> #{vo.start}
+        </if>
+        <if test="null != vo.endTime and ''!= vo.endTime">
+            AND time <![CDATA[ <= ]]> #{vo.end}
+        </if>
+        <if test="null != vo.activeDateStart and ''!= vo.activeDateStart">
+            AND activeDate <![CDATA[ >= ]]> #{vo.activeDateStart}
+        </if>
+        <if test="null != vo.activeDateEnd and ''!= vo.activeDateEnd">
+            AND activeDate <![CDATA[ <= ]]> #{vo.activeDateEnd}
+        </if>
+    </select>
 </mapper>

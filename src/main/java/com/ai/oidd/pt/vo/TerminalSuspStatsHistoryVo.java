@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Asiainfo-OIDD
@@ -13,19 +14,19 @@ import java.io.Serializable;
  * @date 2018-05-25
  */
 @Data
-public class TerminalSuspStatsVo extends Query implements Serializable {
+public class TerminalSuspStatsHistoryVo extends Query implements Serializable {
 
     /**
      * 识别结束时间
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private String startTime;
+    private Date startTime;
 
     /**
      * 识别结束时间
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private String endTime;
+    private Date endTime;
 
     /**
      * 终端串号
@@ -46,11 +47,11 @@ public class TerminalSuspStatsVo extends Query implements Serializable {
      * 最近活跃时间
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private String activeDateStart;
+    private Date activeDateStart;
 
     /**
      * 最近活跃时间
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private String activeDateEnd;
+    private Date activeDateEnd;
 }

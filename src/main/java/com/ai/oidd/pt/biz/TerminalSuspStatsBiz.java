@@ -4,15 +4,14 @@ import com.ai.oidd.pt.common.msg.ObjectRestResponse;
 import com.ai.oidd.pt.common.msg.TableResultResponse;
 import com.ai.oidd.pt.entity.TerminalSuspStats;
 import com.ai.oidd.pt.mapper.TerminalSuspStatsMapper;
-import com.ai.oidd.pt.vo.CityCodeQty;
-import com.ai.oidd.pt.vo.CommonQty;
-import com.ai.oidd.pt.vo.MdnSuspStatsVo;
+import com.ai.oidd.pt.vo.*;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -73,35 +72,62 @@ public class TerminalSuspStatsBiz extends BaseBiz<TerminalSuspStatsMapper, Termi
      * @param vo
      * @return
      */
-    public TableResultResponse<TerminalSuspStats> queryByExampleAndPage(MdnSuspStatsVo vo) {
+    public TableResultResponse<TerminalSuspStats> queryByExampleAndPage(TerminalSuspStatsVo vo) {
+        int page = 1;
+        int limit = 10;
+        if (null != vo) {
+            page = vo.getPage();
+            limit = vo.getLimit();
+        }
+
+        if (0 == page && 0 == limit) {
+            page = 1;
+            limit = 10;
+        }
+
+        Page<Object> result = PageHelper.startPage(page, limit);
+
+        List<TerminalCount> countList = mapper.countTerminalImei(vo);
+        List<TerminalSuspStats> list = new ArrayList<>();
+        for (TerminalCount count: countList) {
+            TerminalSuspStats min = mapper.queryMinTime(vo, count.getImei());
+            TerminalSuspStats max = mapper.queryMaxActiveTime(vo, count.getImei());
+            min.setAppearNum(count.getTotal());
+            min.setActiveDate(max.getActiveDate());
+            list.add(min);
+        }
+
+        return new TableResultResponse<>(result.getTotal(), list);
+    }
+
+    /**
+     * 终端历史
+     * @param vo
+     * @return
+     */
+    public TableResultResponse<TerminalSuspStats> queryHistoryByExampleAndPage(TerminalSuspStatsHistoryVo vo) {
         Example example = new Example(TerminalSuspStats.class);
         Example.Criteria criteria = example.createCriteria();
         boolean isCriteria = false;
         int page = 1;
         int limit = 10;
         if (null != vo) {
-            String mdn = vo.getMdn();
-            if (StringUtils.isNotEmpty(mdn)) {
+            String imei = vo.getImei();
+            if (StringUtils.isNotEmpty(imei)) {
                 isCriteria = true;
-                criteria.andEqualTo("mdn", mdn);
+                criteria.andEqualTo("imei", imei);
             }
 
-            String sourceType = vo.getSourceType();
-            if (StringUtils.isNotEmpty(sourceType)) {
+            String terminalType = vo.getTerminalType();
+            if (StringUtils.isNotEmpty(terminalType)) {
                 isCriteria = true;
-                criteria.andEqualTo("sourceType", sourceType);
+                criteria.andEqualTo("terminalType", terminalType);
             }
 
             String sourceArea = vo.getSourceArea();
             if (StringUtils.isNotEmpty(sourceArea)) {
                 isCriteria = true;
                 criteria.andEqualTo("sourceArea", sourceArea);
-            }
-
-            String baseId = vo.getBaseId();
-            if (StringUtils.isNotEmpty(baseId)) {
-                isCriteria = true;
-                criteria.andEqualTo("baseId", baseId);
             }
 
             Date start = vo.getStartTime();
@@ -111,17 +137,16 @@ public class TerminalSuspStatsBiz extends BaseBiz<TerminalSuspStatsMapper, Termi
                 criteria.andBetween("time", start, end);
             }
 
-            Date lastDateStart = vo.getLastDateStart();
-            Date lastDateEnd = vo.getLastDateEnd();
-            if (null != lastDateStart && null != lastDateEnd) {
+            Date activeDateStart = vo.getActiveDateStart();
+            Date activeDateEnd = vo.getActiveDateEnd();
+            if (null != activeDateStart && null != activeDateEnd) {
                 isCriteria = true;
-                criteria.andBetween("lastUpdateDate", lastDateStart, lastDateEnd);
+                criteria.andBetween("activeDate", activeDateStart, activeDateEnd);
             }
 
             page = vo.getPage();
             limit = vo.getLimit();
         }
-
 
         if (0 == page && 0 == limit) {
             page = 1;
