@@ -1,7 +1,6 @@
 package com.ai.oidd.pt.biz;
 
 import com.ai.oidd.pt.common.msg.TableResultResponse;
-import com.ai.oidd.pt.entity.TerminalSuspStats;
 import com.ai.oidd.pt.entity.UserAffected;
 import com.ai.oidd.pt.mapper.UserAffectedMapper;
 import com.ai.oidd.pt.vo.*;
@@ -87,7 +86,7 @@ public class UserAffectedBiz extends BaseBiz<UserAffectedMapper, UserAffected> {
      * @return
      */
     public TableResultResponse<UserAffected> queryByExampleAndPage(UserAffectedVo vo) {
-        Example example = new Example(TerminalSuspStats.class);
+        Example example = new Example(UserAffected.class);
         Example.Criteria criteria = example.createCriteria();
         boolean isCriteria = false;
         int page = 1;
