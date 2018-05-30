@@ -3,7 +3,7 @@ package com.ai.oidd.pt.vo;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 
 /**
  * Asiainfo-OIDD
@@ -13,8 +13,18 @@ import java.util.List;
  */
 @Data
 public class MdnBehavor implements Serializable {
+    /**
+     * 行为类型
+     */
+    private String type;
+    /**
+     * 对端号码
+     */
+    private String oppoMdn;
 
-
-    private List<Behavor> behavors;
+    /**
+     * 区域名称
+     */
+    private Date time;
 
 }

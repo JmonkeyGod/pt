@@ -2,24 +2,4 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.oidd.pt.mapper.MdnTrackMapper">
 
-
-    <select id="queryDistinctTerminal" resultType="java.lang.String">
-        SELECT DISTINCT terminalType FROM t_event_track
-         WHERE 1=1
-         AND mdn=#{mdn}
-        <if test="null != start and ''!= start and null != end and ''!= end">
-         and time between #{start,jdbcType=VARCHAR} and #{end,jdbcType=VARCHAR}
-         </if>
-    </select>
-
-
-    <select id="queryAllBehavorOnConditions" resultType="com.ai.oidd.pt.vo.Behavor">
-      select type, position , area from t_event_track
-        where 1=1
-        and mdn=#{mdn}
-        and terminalType =#{terminalType}
-        <if test="null != start and ''!= start and null != end and ''!= end">
-        and time between #{start,jdbcType=VARCHAR} and #{end,jdbcType=VARCHAR}
-        </if>
-    </select>
 </mapper>

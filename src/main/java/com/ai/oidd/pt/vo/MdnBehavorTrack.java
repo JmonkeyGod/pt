@@ -14,5 +14,6 @@ import java.util.List;
 @Data
 public class MdnBehavorTrack {
     private String mdn;
-    private List<MdnTerminal> mdnTerminal;
+    private List<MdnPosition> positions;
+    private List<MdnBehavor> behavors;
 }
