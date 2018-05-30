@@ -13,18 +13,14 @@ import java.util.Date;
  * @date 2018-05-28
  */
 @Data
-@Table(name = "t_user_affected_replay")
 public class UserAffectedReplay implements Serializable {
 
     /**
      * 时间
      */
-    private Date time;
 
-    /**
-     *  诈骗号码
-     */
-    private String mdn;
+    private int time;
+
 
     /**
      * 行为类型
@@ -36,5 +32,5 @@ public class UserAffectedReplay implements Serializable {
     /**
      * 时长
      */
-    private long duration;
+    private long total;
 }

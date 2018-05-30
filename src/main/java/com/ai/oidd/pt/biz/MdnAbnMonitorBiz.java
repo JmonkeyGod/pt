@@ -12,6 +12,7 @@ import tk.mybatis.mapper.entity.Example;
 import com.ai.oidd.pt.mapper.MdnAbnMonitorMapper;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -164,22 +165,29 @@ public class MdnAbnMonitorBiz extends BaseBiz<MdnAbnMonitorMapper, MdnAbnBehavor
                 criteria.andEqualTo("mdn", mdn);
             }
 
-            String imei = vo.getType();
-            if (StringUtils.isNotEmpty(imei)) {
+            String type = vo.getType();
+            if (StringUtils.isNotEmpty(type)) {
                 isCriteria = true;
-                criteria.andEqualTo("type", imei);
+                criteria.andEqualTo("type", type);
             }
 
-            String terminalType = vo.getHcode();
-            if (StringUtils.isNotEmpty(terminalType)) {
+            String hcode = vo.getHcode();
+            if (StringUtils.isNotEmpty(hcode)) {
                 isCriteria = true;
-                criteria.andEqualTo("hcode", terminalType);
+                criteria.andEqualTo("hcode", hcode);
             }
 
-            String sourceType = vo.getStatus();
-            if (StringUtils.isNotEmpty(sourceType)) {
+            String status = vo.getStatus();
+            if (StringUtils.isNotEmpty(status)) {
                 isCriteria = true;
-                criteria.andEqualTo("status", sourceType);
+                criteria.andEqualTo("status", status);
+            }
+
+            Date start = vo.getStarttime();
+            Date end = vo.getLasttime();
+            if (null != start && null != end) {
+                isCriteria = true;
+                criteria.andBetween("lasttime", start, end);
             }
 
             page = vo.getPage();

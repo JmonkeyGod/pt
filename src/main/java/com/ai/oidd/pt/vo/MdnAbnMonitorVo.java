@@ -19,13 +19,13 @@ public class MdnAbnMonitorVo extends Query implements Serializable {
      * 识别结束时间
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private Date startTime;
+    private Date starttime;
 
     /**
      * 识别结束时间
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private Date lastTime;
+    private Date lasttime;
 
     /**
      * 号码

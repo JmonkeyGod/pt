@@ -5,6 +5,7 @@ import com.ai.oidd.pt.common.msg.TableResultResponse;
 import com.ai.oidd.pt.entity.UserAffectedReplay;
 import com.ai.oidd.pt.service.IUserAffectedReplayService;
 import com.ai.oidd.pt.vo.MdnQty;
+import com.ai.oidd.pt.vo.UserAffectedReplayVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,14 +42,15 @@ public class UserAffectedReplayController extends BaseController<IUserAffectedRe
         return new TableResultResponse<>(mdnQties.size(), mdnQties);
     }
 
+
+
     @ApiOperation("诈骗回放")
     @RequestMapping(value = "/count/cmtbd", method = RequestMethod.GET)
     @ResponseBody
-    public TableResultResponse<UserAffectedReplay> countMdnTypeByDate(@RequestParam String mdn
-           ) {
-        List<UserAffectedReplay> commonQties = userAffectedReplayBiz.countMdnTypeByDate(mdn);
-        return new TableResultResponse<>(commonQties.size(), commonQties);
+    public TableResultResponse<UserAffectedReplayVo> countMdnTypeByDate(@ApiParam("开始日期") @RequestParam(required = false) int start
+            ,@ApiParam("结束日期")  @RequestParam(required = false) int end,@RequestParam String mdn
+    ) {
+        return userAffectedReplayBiz.countMdnTypeByDate(start,end,mdn );
     }
-
 
 }

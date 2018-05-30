@@ -2,15 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.oidd.pt.mapper.UserAffectedReplayMapper">
 
-
-    <resultMap id="commonQty" type="com.ai.oidd.pt.vo.CommonQty">
-        <id column="type" jdbcType="INTEGER" property="name"/>
-        <result column="qty" jdbcType="INTEGER" property="qty"/>
-    </resultMap>
-
     <resultMap id="mdnQty" type="com.ai.oidd.pt.vo.MdnQty">
         <id column="mdn" jdbcType="INTEGER" property="mdn"/>
         <result column="qty" jdbcType="INTEGER" property="qty"/>
+    </resultMap>
+
+    <resultMap id="userAffectedReplayMap" type="com.ai.oidd.pt.entity.UserAffectedReplay">
+        <id column="time" jdbcType="INTEGER" property="time"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="total" jdbcType="INTEGER" property="total"/>
     </resultMap>
 
 
@@ -31,18 +31,19 @@
     </select>
 
 
-    <select id="countMdnTypeByDate" resultMap="commonQty">
-        SELECT TYPE,COUNT(*) AS qty
-        FROM t_user_affected_replay
-        WHERE 1=1
-        AND mdn = #{mdn}
-        <if test="null != start and ''!= start and 0 != start">
-            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
-        </if>
-        <if test="null != end and ''!= end and 0 != end">
-            AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
-        </if>
-        GROUP BY TYPE
-
+    <select id="typeReplayByDate" resultMap="userAffectedReplayMap">
+        SELECT m.time,m.type,SUM(m.duration) total FROM
+        (SELECT CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) time ,t.type, t.duration FROM t_user_affected_replay t
+            WHERE 1=1
+            AND mdn = #{mdn}
+            <if test="null != start and ''!= start and 0 != start">
+                AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER) <![CDATA[ >= ]]> #{start}
+            </if>
+            <if test="null != end and ''!= end and 0 != end">
+                AND CAST(DATE_FORMAT(`time`, '%Y%m%d') AS SIGNED INTEGER)  <![CDATA[ <= ]]> #{end}
+            </if>
+        ) m
+        GROUP BY m.time,m.type
+        ORDER BY m.time
     </select>
 </mapper>

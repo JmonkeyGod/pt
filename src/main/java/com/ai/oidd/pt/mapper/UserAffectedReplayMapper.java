@@ -34,6 +34,6 @@ public interface UserAffectedReplayMapper extends Mapper<UserAffectedReplay> {
      * @param end   结束时间
      * @return top5
      */
-    List<CommonQty> countMdnTypeByDate(@Param("mdn") String mdn, @Param("start") Integer start, @Param("end") Integer end);
+    List<UserAffectedReplay> typeReplayByDate( @Param("start") Integer start, @Param("end") Integer end, @Param("mdn") String mdn);
 
 }
